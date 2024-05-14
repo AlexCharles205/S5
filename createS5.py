@@ -2,11 +2,10 @@ from circkit.boolean import OptBooleanCircuit as BooleanCircuit
 #import wboxkit
 from binteger import Bin
 import sys
-sys.path.insert(0, "/home/alex/WBC/tools/wboxkit-main/src/")
 from wboxkit.prng import NFSR, Pool
 from wboxkit.ciphers.aes import BitAES
 from wboxkit.serialize import RawSerializer
-from wboxkit.masking import S5
+from S5 import S5
 import os
 
 key = b"abcdefghABCDEFGH"
