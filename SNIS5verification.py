@@ -29,10 +29,6 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
         for line in range(l,l+s-1):
             output += "dumY%d, " % line
 
-    if (dummyRand == 'output') or (dummyRand == 'both'):
-        for line in range(l,l+s-1):
-            output += "dumZ%d, " % line
-
     # Handling Matrix refresh
     if (MatRefresh == 'right') or (MatRefresh == 'both'):
         for line in range(l):
