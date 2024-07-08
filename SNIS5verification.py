@@ -1,15 +1,37 @@
 import argparse
 
-def generateMaskVerifS5(l, s, IOrefresh='none', MatRefresh='right'):
+def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='none'):
     #IOrefresh='none', 'output', 'inputs', 'both'
     #MatRefresh= 'none', 'low', 'right', 'both'
+    #dummyRand= 'none', 'output', 'inputs', 'both'
 
     output = ""
     output += "(* tSNI verification of S5_%d_%d using MaskVerif tool *)\n\n" %(l,s)
-    output += "proc S5_%d_%d_AND:\n" % (l,s)
-    output += "  inputs: x[0:%d], y[0:%d]\n" % (l+s-2, l+s-2)
-    output += "  outputs: z[0:%d]\n" % (l+s-2)
+
+    if (dummyRand == 'inputs') or (dummyRand == 'both'):
+        output += "proc S5_%d_%d_AND:\n" % (l,s)
+        output += "  inputs: x[0:%d], y[0:%d]\n" % (l-1, l-1)
+    else:
+        output += "proc S5_%d_%d_AND:\n" % (l,s)
+        output += "  inputs: x[0:%d], y[0:%d]\n" % (l+s-2, l+s-2)
+
+    if (dummyRand == 'output') or (dummyRand == 'both'):
+        output += "  outputs: z[0:%d]\n" % (l-1)
+    else:
+        output += "  outputs: z[0:%d]\n" % (l+s-2)
+
     output += "  randoms: "
+    #Handling Dummy as random instead of inputs
+    if (dummyRand == 'inputs') or (dummyRand == 'both'):
+        for line in range(l,l+s-1):
+            output += "dumX%d, " % line
+
+        for line in range(l,l+s-1):
+            output += "dumY%d, " % line
+
+    if (dummyRand == 'output') or (dummyRand == 'both'):
+        for line in range(l,l+s-1):
+            output += "dumZ%d, " % line
 
     # Handling Matrix refresh
     if (MatRefresh == 'right') or (MatRefresh == 'both'):
@@ -41,28 +63,47 @@ def generateMaskVerifS5(l, s, IOrefresh='none', MatRefresh='right'):
             output += "r%d_%d, " % (line,column)
     output += "r%d_%d;\n" % (l-3,l-2)
 
-
     if (IOrefresh == 'inputs') or (IOrefresh == 'both'):
         output += "\n  (* ----------Refreshing Inputs---------- *)\n\n" #######################################
 
-        for i in range(l):
-            output += "  x%d := x[%d];\n" % (i, i)
-        for i in range(l,s+l-1):
-            output += "  x%d := x[%d] + refX_%d;\n" % (i, i, i)
+        for line in range(l):
+            if (line >= l) and (dummyRand == 'inputs' or dummyRand == 'both'):
+                output += "  x%d := dumX%d;\n" % (line, line)
+            else:
+                output += "  x%d := x[%d];\n" % (line, line)
+        for line in range(l,s+l-1):
+            if (line >= l) and (dummyRand == 'inputs' or dummyRand == 'both'):
+                output += "  x%d := dumX%d + refX_%d;\n" % (line, line, line)
+            else:
+                output += "  x%d := x[%d] + refX_%d;\n" % (line, line, line)
+
         output += "\n"
 
-        for i in range(l):
-            output += "  y%d := y[%d];\n" % (i, i)
-        for i in range(l,s+l-1):
-            output += "  y%d := y[%d] + refY_%d;\n" % (i, i, i)
+        for line in range(l):
+            if (line >= l) and (dummyRand == 'inputs' or dummyRand == 'both'):
+                output += "  y%d := dumY%d;\n" % (line, line)
+            else:
+                output += "  y%d := y[%d];\n" % (line, line)
+        for line in range(l,s+l-1):
+            if (line >= l) and (dummyRand == 'inputs' or dummyRand == 'both'):
+                output += "  y%d := dumY%d + refY_%d;\n" % (line, line, line)
+            else:
+                output += "  y%d := y[%d] + refY_%d;\n" % (line, line, line)
     else:
         output += "\n"
-        for i in range(l-1+s):
-            output += "  x%d := x[%d];\n" % (i, i)
+        for line in range(l-1+s):
+            if (line >= l) and (dummyRand == 'inputs' or dummyRand == 'both'):
+                output += "  x%d := dumX%d;\n" % (line, line)
+            else:
+                output += "  x%d := x[%d];\n" % (line, line)
+
         output += "\n"
 
-        for i in range(l-1+s):
-            output += "  y%d := y[%d];\n" % (i, i)
+        for line in range(l-1+s):
+            if (line >= l) and (dummyRand == 'inputs' or dummyRand == 'both'):
+                output += "  y%d := dumY%d;\n" % (line, line)
+            else:
+                output += "  y%d := y[%d];\n" % (line, line)
 
     if (MatRefresh == 'right') or (MatRefresh == 'both'):
         assert s >= 3, "Number of slots s should be greater or equal than three. Currently, s=%d\n\n" % s
@@ -83,7 +124,7 @@ def generateMaskVerifS5(l, s, IOrefresh='none', MatRefresh='right'):
 
         #TODO: the sum of the OTHER vect should be equal to zero !
 
-    output += "\n  (* ----------Phase 1---------- *)\n\n" #######################################
+    output += "\n  (* ----------Phase 1---------- *)\n" #######################################
 
     for line in range(1,l-1):
         output += "\n  (* line %d *)\n" % line
@@ -148,7 +189,10 @@ def generateMaskVerifS5(l, s, IOrefresh='none', MatRefresh='right'):
         output += "\n"
 
     for i in range(l-1):
-        output += "  z[%d] := z%d_%d;\n" % (i, l-2,i)
+        if (line >= l) and (dummyRand == 'output' or dummyRand == 'both'):
+            output += "  Zdum%d := z%d_%d;\n" % (i, l-2,i)
+        else:
+            output += "  z[%d] := z%d_%d;\n" % (i, l-2,i)
 
     output += "\n  (* ----------Phase 4---------- *)\n\n" #######################################
 
@@ -165,13 +209,20 @@ def generateMaskVerifS5(l, s, IOrefresh='none', MatRefresh='right'):
 
     if (IOrefresh == 'output') or (IOrefresh == 'both'):
         output += "\n  (* ----------Refreshing Outputs---------- *)\n\n" #######################################
+
         output += "  z[%d] := z%d_%d;\n" % (l-1, l-2,l-1)
-        for line in range(1,s):
-            output += "  z[%d] := z%d_%d + refZ_%d;\n" % (line+l-1, l-2,line+l-1, line+l-1)
+        for line in range(l,l-1+s):
+            if (line >= l) and (dummyRand == 'output' or dummyRand == 'both'):
+                output += "  Zdum%d := z%d_%d + refZ_%d;\n" % (line, l-2,line, line)
+            else:
+                output += "  z[%d] := z%d_%d + refZ_%d;\n" % (line, l-2,line, line)
 
     else:
-        for line in range(s):
-            output += "  z[%d] := z%d_%d;\n" % (line+l-1, l-2, line+l-1,)
+        for line in range(l-1,l-1+s):
+            if (line >= l) and (dummyRand == 'output' or dummyRand == 'both'):
+                output += "  Zdum%d := z%d_%d;\n" % (line, l-2, line)
+            else:
+                output += "  z[%d] := z%d_%d;\n" % (line, l-2, line)
 
     output += "\nend\n\n"
 
@@ -198,15 +249,20 @@ if __name__ == '__main__' and '__file__' in globals():
     )
 
     parser.add_argument(
-        '-IO', '--IOrefresh', type=str, default="none",
+        '-IO', '--IOrefresh', type=str, default="inputs",
         help="Where to apply input/output refresh ? IOrefresh='none', 'output', 'inputs', 'both'"
     )
 
     parser.add_argument(
-        '-Mat', '--MatRefresh', type=str, default='right',
+        '-Mat', '--MatRefresh', type=str, default='low',
         help="Refreshing slots inside the matrix ? MatRefresh='none', 'right', 'low', 'both'"
+    )
+
+    parser.add_argument(
+        '-dum', '--dummyRand', type=str, default='none',
+        help="Do we consider the dummy slots as not inputs but random values ? 'none', 'output', 'inputs', 'both'"
     )
 
     args = parser.parse_args()
 
-    print(generateMaskVerifS5(args.linear_shares, args.slots, IOrefresh=args.IOrefresh, MatRefresh=args.MatRefresh))
+    print(generateMaskVerifS5(args.linear_shares, args.slots, IOrefresh=args.IOrefresh, MatRefresh=args.MatRefresh, dummyRand=args.dummyRand))
