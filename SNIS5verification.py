@@ -169,11 +169,11 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
 
     if (MatRefresh == 'right') or (MatRefresh == 'both'):
         for line in range(l):
-            output += "  z0_%d := refR%d_%d;\n" % (line, line,l-1)
+            output += "  z0_%d := refR%d_%d + u%d;\n" % (line, line,l-1, line)
         output += "\n"
     else:
         for line in range(l):
-            output += "  z0_%d := v%d;\n" % (line, line)
+            output += "  z0_%d := v%d + u%d;\n" % (line, line, line)
         output += "\n"
 
     for line in range(l-1):
@@ -193,7 +193,7 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
     output += "\n  (* ----------Phase 4---------- *)\n\n" #######################################
 
     for line in range(l-1,l-1+s):
-        output += "  z%d_%d := w%d_%d_%d;\n" % (0,line, 4,line,0)
+        output += "  z%d_%d := w%d_%d_%d + u%d;\n" % (0,line, 4,line,0, line)
 
     output += "\n"
 
