@@ -56,8 +56,10 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
 
     for line in range(l-3):
         for column in range(line+1,l-1):
-            output += "r%d_%d, " % (line,column)
-    output += "r%d_%d;\n" % (l-3,l-2)
+            if (line >= 0) and (column >= 0):
+                output += "r%d_%d, " % (line,column)
+    if l-3 >= 0:
+        output += "r%d_%d;\n" % (l-3,l-2)
 
     if (IOrefresh == 'inputs') or (IOrefresh == 'both'):
         output += "\n  (* ----------Refreshing Inputs---------- *)\n\n" #######################################
