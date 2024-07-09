@@ -17,10 +17,12 @@ with open("S5maskVerif.ml") as file:
             record = False
             tail += "  return(z)\n\n"
         if ("inputs: " in line):
-            for chr in line:
-                c = ord(chr) - ord('0')
-                if (c>0) and (c<10):
-                    nshares=c+1
+            i = 14
+            while (ord(line[i]) - ord('0')>=0) and (ord(line[i]) - ord('0')<10):
+                nshares *= 10
+                nshares += ord(line[i]) - ord('0')
+                i+=1
+            nshares += 1
             header += "  z = [0 for _ in range(%d)]\n\n" % nshares
         if phase2:
             if "(* ----------Phase 2---------- *)" in line:
@@ -58,6 +60,9 @@ tail += "  for j in range(%d):\n" % (l)
 tail += "    X ^= x[j]\n"
 tail += "    Y ^= y[j]\n"
 tail += "    Z ^= z[j]\n"
-tail += "  assert(X&Y == Z)"
+tail += "  assert(X&Y == Z)\n\n\n"
+tail += "print(\"S5 AND gadget computes x&y correctly for 100 random inputs\")\n"
+tail += "print(\"Number of XORs: %d\")\n" % body.count('^')
+tail += "print(\"Number of ANDs: %d\")" % body.count('&')
 
 print(header+body+tail)

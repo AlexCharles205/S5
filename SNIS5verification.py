@@ -224,8 +224,7 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
 
     output += "\nend\n\n"
 
-    for i in range(1, l):
-        output += "order %d noglitch SNI S5_%d_%d_AND\n" % (i,l,s)
+    output += "order %d noglitch SNI S5_%d_%d_AND\n" % (i,l,s)
 
     return(output)
 
