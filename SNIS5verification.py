@@ -1,9 +1,10 @@
 import argparse
 
-def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='none'):
+def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='none', shuffledRand='none'):
     #IOrefresh='none', 'output', 'inputs', 'both'
     #MatRefresh= 'none', 'low', 'right', 'both'
     #dummyRand= 'none', 'output', 'inputs', 'both'
+    #shuffledRand= 'none', 'y', 'n'
 
     output = ""
     output += "(* tSNI verification of S5_%d_%d using MaskVerif tool *)\n\n" %(l,s)
@@ -53,6 +54,12 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
     if (IOrefresh == 'output') or (IOrefresh == 'both'):
         for i in range(1,s):
             output += "refZ_%d, " % (i+l-1)
+
+    # Handling shuffled random to refresh dummy slots at step 2
+    if (shuffledRand=='y'):
+        for line in range(l, l+s-1):
+            for column in range(l-1):
+                output += 'srnd%d_%d, ' % (line, column)
 
     for line in range(l-3):
         for column in range(line+1,l-1):
@@ -194,15 +201,29 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
 
     output += "\n  (* ----------Phase 4---------- *)\n\n" #######################################
 
-    for line in range(l-1,l-1+s):
-        output += "  z%d_%d := w%d_%d_%d + u%d;\n" % (0,line, 4,line,0, line)
+    output += "  z%d_%d := w%d_%d_%d + u%d;\n" % (0,l-1, 4,l-1,0, l-1)
+    if shuffledRand == 'y':
+        for line in range(l,l-1+s):
+            output += "  ref%d_%d := srnd%d_%d + w%d_%d_%d;\n" % (0,line, line,0, 4,line,0)
+            output += "  z%d_%d := ref%d_%d + u%d;\n" % (0,line, 0,line, line)
+    else:
+        for line in range(l,l-1+s):
+            output += "  z%d_%d := w%d_%d_%d + u%d;\n" % (0,line, 4,line,0, line)
 
     output += "\n"
 
-    for line in range(s):
+    output += "\n  (* line %d *)\n" % (l-1)
+    for column in range(1,l-1):
+        output += "  z%d_%d := z%d_%d + w%d_%d_%d;\n" % (column,l-1, column-1,l-1, 4,l-1,column)
+
+    for line in range(1,s):
         output += "\n  (* line %d *)\n" % (line+l-1)
         for column in range(1,l-1):
-            output += "  z%d_%d := z%d_%d + w%d_%d_%d;\n" % (column,line+l-1, column-1,line+l-1, 4,line+l-1,column)
+            if shuffledRand == 'y':
+                output += "  ref%d_%d := srnd%d_%d + w%d_%d_%d;\n" % (column,line+l-1, line+l-1,column, 4,line+l-1,column)
+                output += "  z%d_%d := z%d_%d + ref%d_%d;\n" % (column,line+l-1, column-1,line+l-1, column,line+l-1)
+            else:
+                output += "  z%d_%d := z%d_%d + w%d_%d_%d;\n" % (column,line+l-1, column-1,line+l-1, 4,line+l-1,column)
         output += "\n"
 
     if (IOrefresh == 'output') or (IOrefresh == 'both'):
@@ -224,7 +245,7 @@ def generateMaskVerifS5(l, s, IOrefresh='inputs', MatRefresh='low', dummyRand='n
 
     output += "\nend\n\n"
 
-    output += "order %d noglitch SNI S5_%d_%d_AND\n" % (i,l,s)
+    output += "order %d noglitch SNI S5_%d_%d_AND\n" % ((l-1),l,s)
 
     return(output)
 
@@ -260,6 +281,11 @@ if __name__ == '__main__' and '__file__' in globals():
         help="Do we consider the dummy slots as not inputs but random values ? 'none', 'output', 'inputs', 'both'"
     )
 
+    parser.add_argument(
+        '-srnd', '--shuffledRand', type=str, default='none',
+        help="Do we consider the dummy slots as not inputs but random values ? 'none', 'y', 'n'"
+    )
+
     args = parser.parse_args()
 
-    print(generateMaskVerifS5(args.linear_shares, args.slots, IOrefresh=args.IOrefresh, MatRefresh=args.MatRefresh, dummyRand=args.dummyRand))
+    print(generateMaskVerifS5(args.linear_shares, args.slots, IOrefresh=args.IOrefresh, MatRefresh=args.MatRefresh, dummyRand=args.dummyRand, shuffledRand=args.shuffledRand))
