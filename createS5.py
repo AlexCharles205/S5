@@ -39,21 +39,19 @@ ct1 = C.evaluate(Bin(plaintext).tuple)
 ct2 = C_S5.evaluate(Bin(plaintext).tuple)
 assert ct1==ct2
 
-"""
-c=0
-for i in range(100):
-    plaintext = os.urandom(16)
-    ct1 = C.evaluate(Bin(plaintext).tuple)
-    ct2 = C_S5.evaluate(Bin(plaintext).tuple)
-    if ct1==ct2:
-        c+=1
+# c=0
+# for i in range(100):
+#     plaintext = os.urandom(16)
+#     ct1 = C.evaluate(Bin(plaintext).tuple)
+#     ct2 = C_S5.evaluate(Bin(plaintext).tuple)
+#     if ct1==ct2:
+#         c+=1
+#
+# print(c/100)
 
-print(c/100)
-"""
-# print(ct1)
-# print(ct2)
-# print(ct1==ct2)
-
+print("Regular AES stats:")
 C.print_stats()
+
+print("\nS5 AES stats:")
 C_S5.print_stats()
-RawSerializer().serialize_to_file(C_S5, "circuits/aes2_S5.bin")
+RawSerializer().serialize_to_file(C_S5, "circuits/aes2_S5_3_3.bin")

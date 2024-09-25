@@ -20,10 +20,17 @@ class S5(MaskingTransformer):
         NAME_SUFFIX = "_S5"
         EPSILON = 1e-9
 
-        # def before_transform(self, circuit, **kwargs):
-        #     self.flags = self.create_shuffle()
-        #     super().before_transform(circuit, **kwargs)
+        def __init__(self, *args, order=2, dummy=2, max_bias=1/8.0, **kwargs):
+            self.slots = int(dummy)      # equals to s in the paper
+            self.lin_shares = int(order) # equals to l in the paper
+            n_shares = int(self.slots + self.lin_shares - 1)
+            super().__init__(*args, n_shares=n_shares, **kwargs)
 
+            self.max_bias = float(max_bias)
+            assert 0 < self.max_bias <= 1
+
+            self.refresh = None
+            self.initialized = 0
 
         def create_shuffle(self, n_slots):
             flags = []
@@ -99,13 +106,6 @@ class S5(MaskingTransformer):
             return flags
 
         def shuffle(self, xs, flags):
-            """
-            xs = list(xs)
-            n = len(xs[0])
-            for flag, i, j in flags:
-                flag_vec = Array([flag]*n)
-                xs[i], xs[j] = self.cswap(xs[i], xs[j], flag=flag_vec)
-            """
             xs = list(xs)
             for flag, i, j in flags:
                 xs[i], xs[j] = self.cswap(xs[i], xs[j], flag)
@@ -121,19 +121,33 @@ class S5(MaskingTransformer):
             dxy = flag & (x ^ y)
             return (dxy ^ y, dxy ^ x)
 
-        def __init__(self, *args, order=2, dummy=2, max_bias=1/8.0, **kwargs):
-            self.slots = int(dummy)      # equals to s in the paper
-            self.lin_shares = int(order) # equals to l in the paper
-            n_shares = int(self.slots + self.lin_shares - 1)
-            super().__init__(*args, n_shares=n_shares, **kwargs)
+        def refreshSlots(self, x):
+            rand = [self.rand() for _ in range(self.slots-1)]
+            rand.insert(0,0)
+            rand = self.shuffle(rand, flags=self.flags)
+            for i in range(self.slots):
+                x[i + self.lin_shares - 1] = x[i + self.lin_shares - 1] ^ rand[i]
+            return(x)
 
-            self.max_bias = float(max_bias)
-            assert 0 < self.max_bias <= 1
+        def SharedShuffledRandomness(self):
+            #genrating shuffled randomness
+            shufRand = [self.rand() for _ in range(self.slots-1)]
+            shufRand.insert(0,0)
+            shufRand = self.shuffle(shufRand, flags=self.flags)
 
-            self.refresh = None
-            self.initialized = 0
+            #SNI sharing shuffled randomnes (Gadget 4b from "Strong Non-Interference and Type-Directed Higher-Order Masking")
+            srnd = [[0] * (self.lin_shares-2) for _ in range(self.slots)]
+            for s in range(self.slots):
+                srnd[s].append(shufRand[s])
 
-            #self.flags = self.create_shuffle()
+            for s in range(self.slots):
+                for i in range(self.lin_shares-1):
+                    for j in range(i+1, self.lin_shares-1):
+                        r = self.rand()
+                        srnd[s][i] = srnd[s][i] ^ r
+                        srnd[s][j] = srnd[s][j] ^ r
+
+            return(srnd)
 
         def encode(self, s):
             if not self.initialized:
@@ -156,32 +170,49 @@ class S5(MaskingTransformer):
             return x ^ y
 
         def visit_AND(self, node, x, y):
+            x = self.refreshSlots(x)
+            y = self.refreshSlots(y)
+
             r = [[0] * self.lin_shares for _ in range(self.n_shares)]
+
+            #Phase 1
             for i in range(self.lin_shares-1):
                 for j in range(i+1, self.lin_shares-1):
                     r[i][j] = self.rand()
-                    r[j][i] = r[i][j] ^ x[i]&y[j] ^ x[j]&y[i]
+                    r[j][i] = ( r[i][j] ^ x[i]&y[j] ) ^ x[j]&y[i]
 
+            #Phase 2
             for i in range(self.lin_shares-1):
                 r[i][self.lin_shares-1] = self.rand()
 
             for s in range(self.lin_shares-1, self.n_shares):
                 for i in range(self.lin_shares-1):
-                    r[s][i] = r[i][self.lin_shares-1] ^ x[i]&y[s] ^ x[s]&y[i]
+                    r[s][i] = ( r[i][self.lin_shares-1] ^ x[i]&y[s] ) ^ x[s]&y[i]
 
-            z = x & y
+            z = x & y  #Also computes the "and" at the end of phase 1
+
+            """
+            #Phase 3 and 4
             for i in range(self.n_shares):
                 for j in range(self.lin_shares):
                     if i != j:
                         z[i] = z[i] ^ r[i][j]
-            # for i in range(self.lin_shares):
-            #     for j in range(self.lin_shares-1):
-            #         if i != j:
-            #             z[i] = z[i] ^ r[i][j]
-            #
-            # for i in range(self.lin_shares, self.n_shares):
-            #     for j in range(self.lin_shares-1):
-            #         z[i] = z[i] ^ r[i][j]
+            z = self.refreshSlots(z)
+            """
+
+            #Phase 3
+            for i in range(self.lin_shares-1):
+                for j in range(self.lin_shares):
+                    if i != j:
+                        z[i] = z[i] ^ r[i][j]
+            #z = self.refreshSlots(z)
+
+            #Phase 4
+            srnd = self.SharedShuffledRandomness()
+            for i in range(self.lin_shares-1, self.n_shares):
+                for j in range(self.lin_shares-1):
+                    z[i] = (z[i] ^ srnd[i-self.lin_shares+1][j]) ^ r[i][j]
+            #z = self.refreshSlots(z)
             return z
 
         def visit_NOT(self, node, x):

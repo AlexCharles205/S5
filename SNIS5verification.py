@@ -22,7 +22,7 @@ def generateMaskVerifS5(l, s):
     for line in range(l):
         output += "v%d, " % (line)
 
-        
+
     # Handling shuffled random to refresh dummy slots at step 2
     for line in range(l, l+s-1):
         for column in range(l-1):

@@ -1,0 +1,4 @@
+Performing the test on S5_7_7
+S5 AND gadget computes x&y correctly for 100 random inputs
+Number of XORs: 247
+Number of ANDs: 127
