@@ -7,6 +7,8 @@ body = ""
 tail = ""
 nshares = 0
 l = 0
+
+#Transforms the maskverif file into a python file
 with open("S5maskVerif.ml") as file:
     record = False
     phase2 = True

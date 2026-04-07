@@ -34,6 +34,10 @@ def generateMaskVerifS5(l, s):
                 output += "r%d_%d, " % (line,column)
     if l-3 >= 0:
         output += "r%d_%d;\n" % (l-3,l-2)
+    else:
+        tmp = list(output)
+        tmp[-2] = ';'
+        output = "".join(tmp)
 
     output += "\n  (* ----------Refreshing Inputs---------- *)\n\n" #######################################
 
