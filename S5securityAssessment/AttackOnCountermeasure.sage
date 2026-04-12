@@ -132,7 +132,7 @@ if __name__ == '__main__' and '__file__' in globals():
 
     S5brokenTotal = False
     startTotalTime = time.time()
-    S5brokenTotal = S5brokenTotal | runAttacksOfFixedDegree(1,args.window_size, args.step_size,args.trace_amount, "ToyAES_%d_%d" % (args.degree, args.degree), args.trace_dir)
+    S5brokenTotal = S5brokenTotal | runAttacksOfFixedDegree(1,args.window_size, args.step_size, args.trace_amount, "ToyAES_%d_%d" % (args.degree, args.degree), args.trace_dir)
     endTotalTime = time.time()
     if args.degree > 1:
         print("\n")

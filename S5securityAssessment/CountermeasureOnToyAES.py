@@ -3,7 +3,7 @@ from binteger import Bin
 import sys
 from wboxkit.prng import NFSR, Pool
 from wboxkit.serialize import RawSerializer
-from wboxkit.masking import ISW, DumShuf, MINQ
+from wboxkit.masking import ISW, DumShuf, MINQ, QuadLin
 from ToyAES import ToyAES
 import os
 import argparse
@@ -50,10 +50,11 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
     #To generate the base ToyAES circuit:
     if (countermeasure=="None")|(l==0)|(s==0):
         RawSerializer().serialize_to_file(C, "circuits/ToyAES.bin")
+        C.print_stats()
         return True
 
     #To generate the ToyAES protected by S5:
-    if countermeasure == "S5"
+    if countermeasure == "S5":
         #Verify the transformation validity
         C_S5_unencoded = S5(prng=prng, order=l, dummy=s, encoded_output=0).transform(C)
         C_S5_unencoded.in_place_remove_unused_nodes()
@@ -100,7 +101,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_protected = DumShuf(prng=prng, n_shares=s, decode_output=False).transform(C)
         C_protected.in_place_remove_unused_nodes()
 
-    if countermeasure == "MINQ"
+    if countermeasure == "MINQ":
         #Verify the transformation validity
         C_MINQ_unencoded = MINQ(prng=prng, decode_output=True).transform(C)
         C_MINQ_unencoded.in_place_remove_unused_nodes()
@@ -114,7 +115,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_protected = MINQ(prng=prng, decode_output=False).transform(C)
         C_protected.in_place_remove_unused_nodes()
 
-    if countermeasure == "SEL"
+    if countermeasure == "SEL":
         #Verify the transformation validity
         C_SEL_unencoded = QuadLin(prng=prng, n_linear=l, decode_output=True).transform(C)
         C_SEL_unencoded.in_place_remove_unused_nodes()
@@ -152,12 +153,12 @@ if __name__ == '__main__' and '__file__' in globals():
     )
 
     parser.add_argument(
-        '-l', '--linear-shares', type=int, default=3,
+        '-l', '--linear-shares', type=int, default=0,
         help="Number of linear shares"
     )
 
     parser.add_argument(
-        '-s', '--slots', type=int, default=3,
+        '-s', '--slots', type=int, default=0,
         help="Number of slots"
     )
 
@@ -166,6 +167,11 @@ if __name__ == '__main__' and '__file__' in globals():
         help="Whether you want to prin the stats of the different implementations or not"
     )
 
+    parser.add_argument(
+        "-c", "--countermeasure", type=str, default="S5",
+        help="What countermeasure to apply amongst \"S5\", \"ISW\", \"DS\", \"MINQ\", \"SEL\" or \"None\" for no countermeasure"
+    )
+
     args = parser.parse_args()
 
-    createS5onToyAES(args.linear_shares, args.slots, printStats=args.print_stats)
+    countermeasureOnToyAES(args.countermeasure, args.linear_shares, args.slots, printStats=args.print_stats)
