@@ -20,7 +20,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
     #DS uses s slots
     #MINQ is constant
     #SEL has l linear shares and is degree 2
-    assert countermeasure in ["None", "S5", "ISW", "DS", "MINQ", "SEL"], "The countermeasure should be amongst \"S5\", \"ISW\", \"DS\", \"MINQ\", \"SEL\" or \"None\" for no countermeasure."
+    assert countermeasure in ["None", "S5", "ISW", "DS", "MINQ", "SEL", "ISWoDS"], "The countermeasure should be amongst \"S5\", \"ISW\", \"DS\", \"MINQ\", \"SEL\", \"ISWoDS\" or \"None\" for no countermeasure."
 
     #The Pseudo-Random Number Generator used to create fresh randomness in the circuit
     nfsr = NFSR(
@@ -74,7 +74,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_S5.in_place_remove_unused_nodes()
 
         #Saving the output circuit to a file, which can be used with wboxkit to generate traces
-        RawSerializer().serialize_to_file(C_S5, "circuits/ToyAES_%s_%d.bin" % (countermeasure,l))
+        RawSerializer().serialize_to_file(C_S5, "circuits/ToyAES_%s_%d_%d.bin" % (countermeasure,l,s))
 
         if printStats:
             #Printing circuit stats of the base AES and its protected version
@@ -199,44 +199,44 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
             print("ToyAES_%s_%d_%d stats:" % (countermeasure,l,s))
             C_SEL.print_stats()
 
-        if countermeasure == "ISWoDS": #TODO
-            #Verify the transformation validity
-            #Applying Dummy Shuffling to the base AES circuit
-            C_DS = DumShuf(prng=prng, n_shares=s, decode_output=True).transform(C)
-            C_DS.in_place_remove_unused_nodes()
+    if countermeasure == "ISWoDS": #TODO
+        #Verify the transformation validity
+        #Applying Dummy Shuffling to the base AES circuit
+        C_DS = DumShuf(prng=prng, n_shares=s, decode_output=True).transform(C)
+        C_DS.in_place_remove_unused_nodes()
 
-            #Applying ISW to the Dummy Shuffled AES circuit
-            C_ISWoDS_unencoded = ISW(prng=prng, order=l, decode_output=True).transform(C_DS)
-            C_ISWoDS_unencoded.in_place_remove_unused_nodes()
+        #Applying ISW to the Dummy Shuffled AES circuit
+        C_ISWoDS_unencoded = ISW(prng=prng, order=l, decode_output=True).transform(C_DS)
+        C_ISWoDS_unencoded.in_place_remove_unused_nodes()
 
 
-            #Verifying that the protected implementation returns the same output
-            for i in range(10):
-                plaintext = os.urandom(16)
-                ct1 = C.evaluate(Bin(plaintext).tuple)
-                ct2 = C_ISWoDS_unencoded.evaluate(Bin(plaintext).tuple)
-                assert ct1==ct2
+        #Verifying that the protected implementation returns the same output
+        for i in range(10):
+            plaintext = os.urandom(2)
+            ct1 = C.evaluate(Bin(plaintext).tuple)
+            ct2 = C_ISWoDS_unencoded.evaluate(Bin(plaintext).tuple)
+            assert ct1==ct2
 
-            C_DS = DumShuf(prng=prng, n_shares=s, decode_output=False).transform(C)
-            C_DS.in_place_remove_unused_nodes()
+        C_DS = DumShuf(prng=prng, n_shares=s, decode_output=False).transform(C)
+        C_DS.in_place_remove_unused_nodes()
 
-            #Applying ISW to the Dummy Shuffled AES circuit
-            C_ISWoDS = ISW(prng=prng, order=l, decode_output=False).transform(C_DS)
-            C_ISWoDS.in_place_remove_unused_nodes()
+        #Applying ISW to the Dummy Shuffled AES circuit
+        C_ISWoDS = ISW(prng=prng, order=l, decode_output=False).transform(C_DS)
+        C_ISWoDS.in_place_remove_unused_nodes()
 
-            #Saving the output circuit to a file, which can be used with wboxkit to generate traces
-            RawSerializer().serialize_to_file(C_ISWoDS, "circuits/ToyAES_%s_%d_%d.bin" % (countermeasure,l,s))
+        #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+        RawSerializer().serialize_to_file(C_ISWoDS, "circuits/ToyAES_%s_%d_%d.bin" % (countermeasure,l,s))
 
-            if printStats:
-                #Printing circuit stats of the base AES and its protected version
-                print("Regular ToyAES stats:")
-                C.print_stats()
+        if printStats:
+            #Printing circuit stats of the base AES and its protected version
+            print("Regular ToyAES stats:")
+            C.print_stats()
 
-                # print("Unencoded S5 ToyAES stats:")
-                # C_S5_unencoded.print_stats()
+            # print("Unencoded S5 ToyAES stats:")
+            # C_S5_unencoded.print_stats()
 
-                print("ToyAES_%s_%d_%d stats:" % (countermeasure,l,s))
-                C_ISWoDS.print_stats()
+            print("ToyAES_%s_%d_%d stats:" % (countermeasure,l,s))
+            C_ISWoDS.print_stats()
 
 
     return(True)
@@ -265,7 +265,7 @@ if __name__ == '__main__' and '__file__' in globals():
 
     parser.add_argument(
         "-c", "--countermeasure", type=str, default="S5",
-        help="What countermeasure to apply amongst \"S5\", \"ISW\", \"DS\", \"MINQ\", \"SEL\" or \"None\" for no countermeasure"
+        help="What countermeasure to apply amongst \"S5\", \"ISW\", \"DS\", \"MINQ\", \"SEL\", \"ISWoDS\" or \"None\" for no countermeasure"
     )
 
     parser.add_argument(
@@ -278,17 +278,24 @@ if __name__ == '__main__' and '__file__' in globals():
     if args.generate_all:
         countermeasureOnToyAES("None", printStats=True)
         print()
+        print()
         countermeasureOnToyAES("ISW", l=2, printStats=True)
+        print()
         print()
         countermeasureOnToyAES("ISW", l=3, printStats=True)
         print()
+        print()
         countermeasureOnToyAES("MINQ", printStats=True)
+        print()
         print()
         countermeasureOnToyAES("DS", l=2, s=2, printStats=True)
         print()
+        print()
         countermeasureOnToyAES("SEL", l=2, s=2, printStats=True)
         print()
+        print()
         countermeasureOnToyAES("S5", l=3, s=3, printStats=True)
+        print()
         print()
         countermeasureOnToyAES("ISWoDS", l=3, s=3, printStats=True)
         print()
