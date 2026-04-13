@@ -48,7 +48,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
     C.in_place_remove_unused_nodes()
 
     #To generate the base ToyAES circuit:
-    if (countermeasure=="None")|(l==0)|(s==0):
+    if countermeasure=="None":
         RawSerializer().serialize_to_file(C, "circuits/ToyAES.bin")
         C.print_stats()
         return True
@@ -70,8 +70,22 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         #corresponds to the output of the first Sbox of the first round of the AES.
         #Indeed, if left decoded, no protection is applied to it, and therefore
         #every attack succeeds, independently of the protection applied to toyAES.
-        C_protected = S5(prng=prng, order=l, dummy=s, decode_output=False).transform(C)
-        C_protected.in_place_remove_unused_nodes()
+        C_S5 = S5(prng=prng, order=l, dummy=s, decode_output=False).transform(C)
+        C_S5.in_place_remove_unused_nodes()
+
+        #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+        RawSerializer().serialize_to_file(C_S5, "circuits/ToyAES_%s_%d.bin" % (countermeasure,l))
+
+        if printStats:
+            #Printing circuit stats of the base AES and its protected version
+            print("Regular ToyAES stats:")
+            C.print_stats()
+
+            # print("Unencoded S5 ToyAES stats:")
+            # C_S5_unencoded.print_stats()
+
+            print("ToyAES_%s_%d stats:" % (countermeasure,l))
+            C_S5.print_stats()
 
     if countermeasure == "ISW":
         #Verify the transformation validity
@@ -84,8 +98,22 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
             ct2 = C_ISW_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
 
-        C_protected = ISW(prng=prng, order=l, decode_output=False).transform(C)
-        C_protected.in_place_remove_unused_nodes()
+        C_ISW = ISW(prng=prng, order=l, decode_output=False).transform(C)
+        C_ISW.in_place_remove_unused_nodes()
+
+        #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+        RawSerializer().serialize_to_file(C_ISW, "circuits/ToyAES_%s_%d.bin" % (countermeasure,l))
+
+        if printStats:
+            #Printing circuit stats of the base AES and its protected version
+            print("Regular ToyAES stats:")
+            C.print_stats()
+
+            # print("Unencoded S5 ToyAES stats:")
+            # C_S5_unencoded.print_stats()
+
+            print("ToyAES_%s_%d stats:" % (countermeasure,l))
+            C_ISW.print_stats()
 
     if countermeasure == "DS":
         #Verify the transformation validity
@@ -98,8 +126,22 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
             ct2 = C_DS_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
 
-        C_protected = DumShuf(prng=prng, n_shares=s, decode_output=False).transform(C)
-        C_protected.in_place_remove_unused_nodes()
+        C_DS = DumShuf(prng=prng, n_shares=s, decode_output=False).transform(C)
+        C_DS.in_place_remove_unused_nodes()
+
+        #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+        RawSerializer().serialize_to_file(C_DS, "circuits/ToyAES_%s_%d.bin" % (countermeasure,s))
+
+        if printStats:
+            #Printing circuit stats of the base AES and its protected version
+            print("Regular ToyAES stats:")
+            C.print_stats()
+
+            # print("Unencoded S5 ToyAES stats:")
+            # C_S5_unencoded.print_stats()
+
+            print("ToyAES_%s_%d stats:" % (countermeasure,s))
+            C_DS.print_stats()
 
     if countermeasure == "MINQ":
         #Verify the transformation validity
@@ -112,8 +154,22 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
             ct2 = C_MINQ_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
 
-        C_protected = MINQ(prng=prng, decode_output=False).transform(C)
-        C_protected.in_place_remove_unused_nodes()
+        C_MINQ = MINQ(prng=prng, decode_output=False).transform(C)
+        C_MINQ.in_place_remove_unused_nodes()
+
+        #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+        RawSerializer().serialize_to_file(C_MINQ, "circuits/ToyAES_%s.bin" % (countermeasure))
+
+        if printStats:
+            #Printing circuit stats of the base AES and its protected version
+            print("Regular ToyAES stats:")
+            C.print_stats()
+
+            # print("Unencoded S5 ToyAES stats:")
+            # C_S5_unencoded.print_stats()
+
+            print("ToyAES_%s stats:" % (countermeasure))
+            C_MINQ.print_stats()
 
     if countermeasure == "SEL":
         #Verify the transformation validity
@@ -126,22 +182,62 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
             ct2 = C_SEL_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
 
-        C_protected = QuadLin(prng=prng, n_linear=l, decode_output=False).transform(C)
-        C_protected.in_place_remove_unused_nodes()
+        C_SEL = QuadLin(prng=prng, n_linear=l, decode_output=False).transform(C)
+        C_SEL.in_place_remove_unused_nodes()
 
-    #Saving the output circuit to a file, which can be used with wboxkit to generate traces
-    RawSerializer().serialize_to_file(C_protected, "circuits/ToyAES_%s_%d_%d.bin" % (countermeasure,l,s))
+        #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+        RawSerializer().serialize_to_file(C_SEL, "circuits/ToyAES_%s_%d_%d.bin" % (countermeasure,l,s))
 
-    if printStats:
-        #Printing circuit stats of the base AES and its protected version
-        print("Regular ToyAES stats:")
-        C.print_stats()
+        if printStats:
+            #Printing circuit stats of the base AES and its protected version
+            print("Regular ToyAES stats:")
+            C.print_stats()
 
-        # print("Unencoded S5 ToyAES stats:")
-        # C_S5_unencoded.print_stats()
+            # print("Unencoded S5 ToyAES stats:")
+            # C_S5_unencoded.print_stats()
 
-        print("ToyAES_%s_%d_%d stats:" % (countermeasure,l,s))
-        C_protected.print_stats()
+            print("ToyAES_%s_%d_%d stats:" % (countermeasure,l,s))
+            C_SEL.print_stats()
+
+        if countermeasure == "ISWoDS": #TODO
+            #Verify the transformation validity
+            #Applying Dummy Shuffling to the base AES circuit
+            C_DS = DumShuf(prng=prng, n_shares=s, decode_output=True).transform(C)
+            C_DS.in_place_remove_unused_nodes()
+
+            #Applying ISW to the Dummy Shuffled AES circuit
+            C_ISWoDS_unencoded = ISW(prng=prng, order=l, decode_output=True).transform(C_DS)
+            C_ISWoDS_unencoded.in_place_remove_unused_nodes()
+
+
+            #Verifying that the protected implementation returns the same output
+            for i in range(10):
+                plaintext = os.urandom(16)
+                ct1 = C.evaluate(Bin(plaintext).tuple)
+                ct2 = C_ISWoDS_unencoded.evaluate(Bin(plaintext).tuple)
+                assert ct1==ct2
+
+            C_DS = DumShuf(prng=prng, n_shares=s, decode_output=False).transform(C)
+            C_DS.in_place_remove_unused_nodes()
+
+            #Applying ISW to the Dummy Shuffled AES circuit
+            C_ISWoDS = ISW(prng=prng, order=l, decode_output=False).transform(C_DS)
+            C_ISWoDS.in_place_remove_unused_nodes()
+
+            #Saving the output circuit to a file, which can be used with wboxkit to generate traces
+            RawSerializer().serialize_to_file(C_ISWoDS, "circuits/ToyAES_%s_%d_%d.bin" % (countermeasure,l,s))
+
+            if printStats:
+                #Printing circuit stats of the base AES and its protected version
+                print("Regular ToyAES stats:")
+                C.print_stats()
+
+                # print("Unencoded S5 ToyAES stats:")
+                # C_S5_unencoded.print_stats()
+
+                print("ToyAES_%s_%d_%d stats:" % (countermeasure,l,s))
+                C_ISWoDS.print_stats()
+
 
     return(True)
 
@@ -172,6 +268,29 @@ if __name__ == '__main__' and '__file__' in globals():
         help="What countermeasure to apply amongst \"S5\", \"ISW\", \"DS\", \"MINQ\", \"SEL\" or \"None\" for no countermeasure"
     )
 
+    parser.add_argument(
+        "-a", "--generate-all", type=int, default=0,
+        help="To generate all the necessary circuits required for the TestAttacks.sage"
+    )
+
     args = parser.parse_args()
 
-    countermeasureOnToyAES(args.countermeasure, args.linear_shares, args.slots, printStats=args.print_stats)
+    if args.generate_all:
+        countermeasureOnToyAES("None", printStats=True)
+        print()
+        countermeasureOnToyAES("ISW", l=2, printStats=True)
+        print()
+        countermeasureOnToyAES("ISW", l=3, printStats=True)
+        print()
+        countermeasureOnToyAES("MINQ", printStats=True)
+        print()
+        countermeasureOnToyAES("DS", l=2, s=2, printStats=True)
+        print()
+        countermeasureOnToyAES("SEL", l=2, s=2, printStats=True)
+        print()
+        countermeasureOnToyAES("S5", l=3, s=3, printStats=True)
+        print()
+        countermeasureOnToyAES("ISWoDS", l=3, s=3, printStats=True)
+        print()
+    else:
+        countermeasureOnToyAES(args.countermeasure, args.linear_shares, args.slots, printStats=args.print_stats)
