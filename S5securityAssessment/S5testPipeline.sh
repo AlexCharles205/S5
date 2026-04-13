@@ -1,7 +1,7 @@
 #!/bin/bash -x
-echo "Creating the circuits of the different countermeasures on the ToyAES\n\n" > logstest.txt
+echo "Creating the circuits of the different countermeasures on the ToyAES\n\n" > logs.txt
 python3 CountermeasureOnToyAES.py -a 1 >> logs.txt
-echo "\n-------------------------------------------------------------------\n" >> logstest.txt
+echo "\n-------------------------------------------------------------------\n" > logs.txt
 
 wboxkit.trace circuits/ToyAES.bin traces/ -T 1024
 wboxkit.trace circuits/ToyAES_ISW_2.bin traces/ -T 1024
