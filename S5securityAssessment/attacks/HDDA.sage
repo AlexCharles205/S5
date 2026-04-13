@@ -30,6 +30,7 @@ def HDDA(path, T, W, S, Ord=2):
     #assert Ord >= 2, "The order O should be greater than one. For order equal to one, run LDA instead"
 
     RequiredTraces = RequiredAmountOfTracesHDDA(W, Ord)
+    print(RequiredTraces)
 
     assert T>=RequiredTraces, "The number of traces T should be greater or equal than %d" % RequiredTraces
     T = RequiredTraces
