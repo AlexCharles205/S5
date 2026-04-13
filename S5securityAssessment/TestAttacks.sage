@@ -249,7 +249,7 @@ def TestOnSEL_2_2ToyAES(pathToToyAES):
     end = time.time()
     printResult(start, end, SuccessHODCA, True, "HODCA", "SEL_2_2 ToyAES")
 
-def TestOnS5_3_3ToyAES(W,S,totalT,ImplementationName,pathToToyAES):
+def TestOnS5_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on S5_3_3 ToyAES:")
     start = time.time()
@@ -292,7 +292,7 @@ def TestOnS5_3_3ToyAES(W,S,totalT,ImplementationName,pathToToyAES):
     end = time.time()
     printResult(start, end, SuccessHODCA, False, "HODCA", "S5_3_3 ToyAES")
 
-def TestOnISWoDS_3_3ToyAES(W,S,totalT,ImplementationName,pathToToyAES):
+def TestOnISWoDS_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on ISWoDS_3_3 ToyAES:")
     start = time.time()
@@ -339,43 +339,43 @@ def TestOnISWoDS_3_3ToyAES(W,S,totalT,ImplementationName,pathToToyAES):
 def RunTestAttacks(pathToToyCircuits):
     logprint("Tests on a ToyAES with no protections")
     #To prove that every attack should work in the regular setting
-    TestOnClearToyAES("Clear ToyAES",pathToToyCircuits / "ToyAES")
+    TestOnClearToyAES(pathToToyCircuits / "ToyAES")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by S5 3 3")
     #To prove that against all the attacks of the litterature, S5 is thwarting them all
-    TestOnS5_3_3ToyAES("S5 3 3 ToyAES",pathToToyCircuits / "ToyAES_S5_3_3")
+    TestOnS5_3_3ToyAES(pathToToyCircuits / "ToyAES_S5_3_3")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by ISW_3oDS_3")
     #To prove that against all the attacks of the litterature, ISWoDS is thwarting them all
-    TestOnISWoDS_3_3ToyAES("ISW_3oDS_3 ToyAES",pathToToyCircuits / "ToyAES_ISWoDS_3_3")
+    TestOnISWoDS_3_3ToyAES(pathToToyCircuits / "ToyAES_ISWoDS_3_3")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by ISW 2")
     #To prove that DCA doesnt work against ISW_2, but that HODCA_2 does
     #To prove that LDA attack works
-    TestOnISW2ToyAES("ISW 2 ToyAES",pathToToyCircuits / "ToyAES_ISW_2")
+    TestOnISW2ToyAES(pathToToyCircuits / "ToyAES_ISW_2")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by ISW 3")
     #To prove that HODCA_2 does ot work agains ISW_3
-    TestOnISW3ToyAES("ISW 3 ToyAES",pathToToyCircuits / "ToyAES_ISW_3")
+    TestOnISW3ToyAES(pathToToyCircuits / "ToyAES_ISW_3")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by MINQ")
     #To prove that LDA should not work against MINQ, but HDDA_2 does
-    TestOnMINQToyAES("MINQ ToyAES",pathToToyCircuits / "ToyAES_MINQ")
+    TestOnMINQToyAES(pathToToyCircuits / "ToyAES_MINQ")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by DS 2")
     #To prove that FLDA does not work against DS, and that DCA works
-    TestOnDS_2ToyAES("DS 2 ToyAES",pathToToyCircuits / "ToyAES_DS_2")
+    TestOnDS_2ToyAES(pathToToyCircuits / "ToyAES_DS_2")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by SEL 2 2")
     #To prove that HDDA, FLDA, HODCA works against SEL_2_2
-    TestOnSEL_2_2ToyAES("SEL 2 2 ToyAES",pathToToyCircuits / "ToyAES_SEL_2_2")
+    TestOnSEL_2_2ToyAES(pathToToyCircuits / "ToyAES_SEL_2_2")
     logprint("------------------------------------\n")
 
 
