@@ -283,7 +283,7 @@ def TestOnS5_3_3ToyAES(pathToToyAES):
     start = time.time()
     SuccessHDDA = HDDA(pathToToyAES, 5100, 100, 25, Ord=2)
     end = time.time()
-    printResult(start, end, SuccessHDDA, True, "HDDA", "S5_3_3_2_2 ToyAES")
+    printResult(start, end, SuccessHDDA, False, "HDDA", "S5_3_3 ToyAES")
 
     logprint()
     logprint("HODCA on S5_3_3 ToyAES:")
@@ -326,7 +326,7 @@ def TestOnISWoDS_3_3ToyAES(pathToToyAES):
     start = time.time()
     SuccessHDDA = HDDA(pathToToyAES, 5100, 100, 25, Ord=2)
     end = time.time()
-    printResult(start, end, SuccessHDDA, True, "HDDA", "ISWoDS_3_3 ToyAES")
+    printResult(start, end, SuccessHDDA, False, "HDDA", "ISWoDS_3_3 ToyAES")
 
     logprint()
     logprint("HODCA on ISWoDS_3_3 ToyAES:")
