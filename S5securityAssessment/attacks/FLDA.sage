@@ -24,11 +24,11 @@ def FiltWindowByNodeVector(W, Idx):
     for i in range(len(W)):
         if i != Idx:
             FiltW.append(FiltVector(W[i], FiltIdx))
-    return(FiltIdx)
+    return(FiltW)
 
 
 def FLDA(path, T, W, S):
-    assert T>=W+20, "The number of traces T should be greater or equal than W+20"
+    assert T>=2*W+20, "The number of traces T should be greater or equal than 2*W+20"
     (NodeVectors, SelectionVector) = SelectionAndNodeVectors(path, T)
 
     nmax = (len(NodeVectors)-W)//S
@@ -46,10 +46,10 @@ def FLDA(path, T, W, S):
 
     Win = SlidingWindow(NodeVectors, W, S, -1, Type='List')
     for NodVecToFilterIdx in range(W):
-        FiltWin = Matrix(GF(2),FiltWindowByNodeVector(Win, NodVecToFilterIdx))
+        FiltWin = Matrix(GF(2),FiltWindowByNodeVector(Win, NodVecToFilterIdx)).transpose()
         FiltSelectionVector = vector(GF(2),FiltVector(SelectionVector, GetFiltIdx(Win[NodVecToFilterIdx])))
         try :
-            FiltWin.solve_left(FiltSelectionVector)
+            FiltWin.solve_right(FiltSelectionVector)
             return(True)
         except :
             pass

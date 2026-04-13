@@ -40,21 +40,21 @@ def HDDA(path, T, W, S, Ord=2):
     for n in range(nmax):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         for o in range(2,Ord+1):
-            ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,Ord))
+            ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,o))
             try :
                 ExtWin.solve_left(SelectionVECTOR)
-                print("Extended window is %d lines and %d lines" % (ExtWin.nrows(), ExtWin.ncols()))
-                print("the seletion vector is %d long" % len(SelectionVECTOR))
-                print("the solution of the solve_left is %d long" % len(ExtWin.solve_left(SelectionVECTOR)))
-                print("rank of ext win rank is %d" % ExtWin.rank())
-                print("window %d out of %d" % (n, nmax))
+                # print("Extended window is %d lines and %d lines" % (ExtWin.nrows(), ExtWin.ncols()))
+                # print("the seletion vector is %d long" % len(SelectionVECTOR))
+                # print("the solution of the solve_left is %d long" % len(ExtWin.solve_left(SelectionVECTOR)))
+                # print("rank of ext win rank is %d" % ExtWin.rank())
+                # print("window %d out of %d" % (n, nmax))
                 return(True)
             except :
                 pass
 
     Win = SlidingWindow(NodeVectors, W, S, -1, Type='List')
     for o in range(2,Ord+1):
-        ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,Ord))
+        ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,o))
         try :
             ExtWin.solve_left(SelectionVECTOR)
             return(True)
