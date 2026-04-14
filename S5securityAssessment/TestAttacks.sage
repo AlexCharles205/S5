@@ -310,7 +310,7 @@ def TestOnISWoDS_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on ISWoDS_3_3 ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,220,100,25)
+    SuccessFLDA = FLDA(pathToToyAES,220,80,20)
     end = time.time()
     printResult(start, end, SuccessFLDA, False, "FLDA", "ISWoDS_3_3 ToyAES")
 
@@ -324,7 +324,7 @@ def TestOnISWoDS_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("HDDA on ISWoDS_3_3 ToyAES:")
     start = time.time()
-    SuccessHDDA = HDDA(pathToToyAES, 5100, 100, 25, Ord=2)
+    SuccessHDDA = HDDA(pathToToyAES, 3290, 80, 20, Ord=2)
     end = time.time()
     printResult(start, end, SuccessHDDA, False, "HDDA", "ISWoDS_3_3 ToyAES")
 

@@ -10,6 +10,6 @@ wboxkit.trace circuits/ToyAES_MINQ.bin traces/ -T 4096
 wboxkit.trace circuits/ToyAES_DS_2.bin traces/ -T 128
 wboxkit.trace circuits/ToyAES_SEL_2_2.bin traces/ -T 8192
 wboxkit.trace circuits/ToyAES_S5_3_3.bin traces/ -T 8192
-wboxkit.trace circuits/ToyAES_ISWoDS_3_3.bin traces/ -T 8192
+wboxkit.trace circuits/ToyAES_ISWoDS_3_3.bin traces/ -T 4096
 
 sage TestAttacks.sage traces/
