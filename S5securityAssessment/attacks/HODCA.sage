@@ -31,14 +31,14 @@ def RequiredAmountOfTraces(W, Ord):
         neededTraces+=binomial(W,Ord)
     return(W+neededTraces)
 
-def ORlists(L1,L2):
-    return([L1[i]|L2[i] for i in range(len(L1))])
+def XORlists(L1,L2):
+    return([L1[i]^^L2[i] for i in range(len(L1))])
 
-def ExtORTheWindow(W, Ord):
+def ExtXORTheWindow(W, Ord):
     ExtW = W.copy()
     for combSize in range(2,Ord+1):
         for comb in Combinations(W, combSize):
-            ExtW.append(ORlists(comb[0],comb[1]))
+            ExtW.append(XORlists(comb[0],comb[1]))
     return(ExtW)
 
 def HODCA(path, T, W, S, Ord=2):
@@ -50,7 +50,7 @@ def HODCA(path, T, W, S, Ord=2):
     for n in range(nmax):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         for o in range(2,Ord+1):
-            ExtWin = ExtORTheWindow(Win,Ord)
+            ExtWin = ExtXORTheWindow(Win,Ord)
             for Nv in ExtWin:
                 for i in range (256):
                     Corr = AbsCorr(Nv, AllSelVectors[i], T)
