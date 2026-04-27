@@ -35,11 +35,11 @@ def mountAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES):
         Success = ExactMatching(pathToToyAES,totalT)
         end = time.time()
         printResult(start, end, Success, "ExactMatch", ImplementationName)
-        
+
 
     if AttackName == "LDA":
         print("LDA on %s:" % ImplementationName)
-        T=W+30
+        T=W+20
         assert totalT >= T, "You need %d traces to perform LDA" % T
         start = time.time()
         Success = LDA(pathToToyAES,T,W,S)
@@ -49,7 +49,7 @@ def mountAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES):
 
     if AttackName == "FLDA":
         print("FLDA on %s:" % ImplementationName)
-        T=3*W+100
+        T=2*W+20
         assert totalT >= T, "You need %d traces to perform FLDA" % T
         start = time.time()
         Success = FLDA(pathToToyAES,T,W,S)
@@ -74,11 +74,11 @@ def mountAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES):
 
 
     if AttackName == "HODCA":
-        print("HODCA of degree %d on %s:" % (degree, ImplementationName), ImplementationName)
+        print("HODCA of degree %d on %s:" % (degree, ImplementationName))
         start = time.time()
         Success = HODCA(pathToToyAES, totalT, W, S, Ord=degree)
         end = time.time()
-        printResult(start, end, Success, "HODCA of degree %d" % degree)
+        printResult(start, end, Success, "HODCA of degree %d" % degree, ImplementationName)
 
 
 

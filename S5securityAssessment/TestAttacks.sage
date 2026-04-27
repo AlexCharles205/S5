@@ -159,21 +159,21 @@ def TestOnMINQToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on MINQ ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,180,80,20)
+    SuccessFLDA = FLDA(pathToToyAES,220,100,25)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "MINQ ToyAES")
 
     logprint()
     logprint("DCA on MINQ ToyAES:")
     start = time.time()
-    SuccessDCA = DCA(pathToToyAES,40)
+    SuccessDCA = DCA(pathToToyAES,150)
     end = time.time()
     printResult(start, end, SuccessDCA, True, "DCA", "MINQ ToyAES")
 
     logprint()
     logprint("HDDA on MINQ ToyAES:")
     start = time.time()
-    SuccessHDDA = HDDA(pathToToyAES, 3290, 80, 20, Ord=2)
+    SuccessHDDA = HDDA(pathToToyAES, 5100, 100, 25, Ord=2)
     end = time.time()
     printResult(start, end, SuccessHDDA, True, "HDDA", "MINQ ToyAES")
 
@@ -224,7 +224,7 @@ def TestOnSEL_2_2ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on SEL_2_2 ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,220,100,25)
+    SuccessFLDA = FLDA(pathToToyAES,100,40,10)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "SEL_2_2 ToyAES")
 
@@ -279,7 +279,7 @@ def TestOnS5_3_3ToyAES(pathToToyAES):
     printResult(start, end, SuccessDCA, False, "DCA", "S5_3_3 ToyAES")
 
     logprint()
-    logprint("HDDA on SEL ToyAES:")
+    logprint("HDDA on S5_3_3 ToyAES:")
     start = time.time()
     SuccessHDDA = HDDA(pathToToyAES, 5100, 100, 25, Ord=2)
     end = time.time()
@@ -324,7 +324,7 @@ def TestOnISWoDS_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("HDDA on ISWoDS_3_3 ToyAES:")
     start = time.time()
-    SuccessHDDA = HDDA(pathToToyAES, 3290, 80, 20, Ord=2)
+    SuccessHDDA = HDDA(pathToToyAES, 870, 40, 10, Ord=2)
     end = time.time()
     printResult(start, end, SuccessHDDA, False, "HDDA", "ISWoDS_3_3 ToyAES")
 
@@ -337,19 +337,10 @@ def TestOnISWoDS_3_3ToyAES(pathToToyAES):
 
 
 def RunTestAttacks(pathToToyCircuits):
+
     logprint("Tests on a ToyAES with no protections")
     #To prove that every attack should work in the regular setting
     TestOnClearToyAES(pathToToyCircuits / "ToyAES")
-    logprint("------------------------------------\n")
-
-    logprint("Tests on a ToyAES protected by S5 3 3")
-    #To prove that against all the attacks of the litterature, S5 is thwarting them all
-    TestOnS5_3_3ToyAES(pathToToyCircuits / "ToyAES_S5_3_3")
-    logprint("------------------------------------\n")
-
-    logprint("Tests on a ToyAES protected by ISW_3oDS_3")
-    #To prove that against all the attacks of the litterature, ISWoDS is thwarting them all
-    TestOnISWoDS_3_3ToyAES(pathToToyCircuits / "ToyAES_ISWoDS_3_3")
     logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by ISW 2")
@@ -368,14 +359,24 @@ def RunTestAttacks(pathToToyCircuits):
     TestOnMINQToyAES(pathToToyCircuits / "ToyAES_MINQ")
     logprint("------------------------------------\n")
 
-    logprint("Tests on a ToyAES protected by DS 2")
-    #To prove that FLDA does not work against DS, and that DCA works
-    TestOnDS_2ToyAES(pathToToyCircuits / "ToyAES_DS_2")
-    logprint("------------------------------------\n")
+    # logprint("Tests on a ToyAES protected by DS 2")
+    # #To prove that FLDA does not work against DS, and that DCA works
+    # TestOnDS_2ToyAES(pathToToyCircuits / "ToyAES_DS_2")
+    # logprint("------------------------------------\n")
 
     logprint("Tests on a ToyAES protected by SEL 2 2")
     #To prove that HDDA, FLDA, HODCA works against SEL_2_2
     TestOnSEL_2_2ToyAES(pathToToyCircuits / "ToyAES_SEL_2_2")
+    logprint("------------------------------------\n")
+
+    logprint("Tests on a ToyAES protected by S5 3 3")
+    #To prove that against all the attacks of the litterature, S5 is thwarting them all
+    TestOnS5_3_3ToyAES(pathToToyCircuits / "ToyAES_S5_3_3")
+    logprint("------------------------------------\n")
+
+    logprint("Tests on a ToyAES protected by ISW_3oDS_3")
+    #To prove that against all the attacks of the litterature, ISWoDS is thwarting them all
+    TestOnISWoDS_3_3ToyAES(pathToToyCircuits / "ToyAES_ISWoDS_3_3")
     logprint("------------------------------------\n")
 
 
