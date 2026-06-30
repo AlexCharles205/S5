@@ -26,22 +26,29 @@ def FiltWindowByNodeVector(W, Idx):
             FiltW.append(FiltVector(W[i], FiltIdx))
     return(FiltW)
 
+def WindowIsTooFiltered(FiltWin, minFilt=20):
+    #print("%d?>%d" % (FiltWin.ncols(), FiltWin.nrows() + minFilt))
+    return(FiltWin.ncols() < (FiltWin.nrows() + minFilt))
 
 def FLDA(path, T, W, S):
     assert T>=2*W+20, "The number of traces T should be greater or equal than 2*W+20"
     (NodeVectors, SelectionVector) = SelectionAndNodeVectors(path, T)
 
+    skip = 0
     nmax = (len(NodeVectors)-W)//S
     for n in range(nmax):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         for NodVecToFilterIdx in range(W):
             FiltWin = Matrix(GF(2),FiltWindowByNodeVector(Win, NodVecToFilterIdx))
-            FiltSelectionVector = vector(GF(2),FiltVector(SelectionVector, GetFiltIdx(Win[NodVecToFilterIdx])))
-            try :
-                FiltWin.solve_left(FiltSelectionVector)
-                return(True)
-            except :
-                pass
+            if not WindowIsTooFiltered(FiltWin):
+                FiltSelectionVector = vector(GF(2),FiltVector(SelectionVector, GetFiltIdx(Win[NodVecToFilterIdx])))
+                try :
+                    FiltWin.solve_left(FiltSelectionVector)
+                    return(True)
+                except :
+                    pass
+            else:
+                skip += 1
 
 
     Win = SlidingWindow(NodeVectors, W, S, -1, Type='List')

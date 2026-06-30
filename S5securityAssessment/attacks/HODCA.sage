@@ -45,11 +45,6 @@ def HODCA(path, T, W, S, Ord=2):
     assert Ord >= 2, "The order O should be greater than one. For order equal to one, run DCA instead"
     (NodeVectors, SelectionVector, AllSelVectors) = SelectionAndNodeVectors(path, T, fullSelvectors = 1)
     BestAbsCorOfSv = [0 for _ in range(256)]
-    print(" expected position:")
-    for i in range(256):
-        if AllSelVectors[i] == SelectionVector:
-            print(i)
-
     nmax = (len(NodeVectors)-W)//S
     for n in range(nmax):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
@@ -62,12 +57,6 @@ def HODCA(path, T, W, S, Ord=2):
                         BestAbsCorOfSv[i] = Corr
 
     if AllSelVectors[maxCorIdx(BestAbsCorOfSv)] == SelectionVector:
-        print("index found")
-        print(maxCorIdx(BestAbsCorOfSv))
-        print("correlation")
-        print(BestAbsCorOfSv[maxCorIdx(BestAbsCorOfSv)])
-        print("correlationS")
-        print(BestAbsCorOfSv)
         return(True)
 
     return(False)

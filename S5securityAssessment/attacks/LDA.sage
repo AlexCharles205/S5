@@ -16,7 +16,7 @@ def LDA(path, T, W, S):
     for n in range(nmax):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='Matrix')
         try :
-            Win.solve_left(SelectionVECTOR)
+            Win.solve_right(SelectionVECTOR)
             return(True)
         except :
             pass
