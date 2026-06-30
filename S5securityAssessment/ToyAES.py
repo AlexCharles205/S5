@@ -16,6 +16,8 @@ def ToyAES(plaintext, key):
     S1[7] = plaintext[7] ^ key[7]
 
     #SubBytes
-    ciphertext = bitSbox(S1, inverse=0)
+    S2 = bitSbox(S1, inverse=0)
+
+    ciphertext = bitSbox(S2, inverse=0)
 
     return ciphertext
