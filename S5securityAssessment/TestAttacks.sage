@@ -63,7 +63,7 @@ def TestOnClearToyAES(pathToToyAES):
     logprint()
     logprint("DCA on Clear ToyAES:")
     start = time.time()
-    SuccessDCA = DCA(pathToToyAES,20)
+    SuccessDCA = DCA(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessDCA, True, "DCA", "Clear ToyAES")
 
