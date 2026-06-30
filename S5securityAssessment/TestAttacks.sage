@@ -42,7 +42,7 @@ def TestOnClearToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on Clear ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, True, "Exact Match", "Clear ToyAES")
 
@@ -56,7 +56,7 @@ def TestOnClearToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on Clear ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,60,20,5)
+    SuccessFLDA = FLDA(pathToToyAES,80,20,5)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "Clear ToyAES")
 
@@ -72,7 +72,7 @@ def TestOnISW2ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on ISW_2 ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "ISW_2 ToyAES")
 
@@ -86,7 +86,7 @@ def TestOnISW2ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on ISW_2 ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,100,40,10)
+    SuccessFLDA = FLDA(pathToToyAES,120,40,10)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "ISW_2 ToyAES")
 
@@ -97,18 +97,11 @@ def TestOnISW2ToyAES(pathToToyAES):
     end = time.time()
     printResult(start, end, SuccessDCA, False, "DCA", "ISW_2 ToyAES")
 
-    logprint()
-    logprint("HODCA on ISW_2 ToyAES:")
-    start = time.time()
-    SuccessHODCA = HODCA(pathToToyAES, 1024, 40, 10, Ord=2)
-    end = time.time()
-    printResult(start, end, SuccessHODCA, True, "HODCA", "ISW_2 ToyAES")
-
 def TestOnISW3ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on ISW_3 ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "ISW_3 ToyAES")
 
@@ -122,7 +115,7 @@ def TestOnISW3ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on ISW_3 ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,100,40,10)
+    SuccessFLDA = FLDA(pathToToyAES,120,40,10)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "ISW_3 ToyAES")
 
@@ -136,7 +129,7 @@ def TestOnISW3ToyAES(pathToToyAES):
     logprint()
     logprint("HODCA on ISW_3 ToyAES:")
     start = time.time()
-    SuccessHODCA = HODCA(pathToToyAES, 1024, 40, 10, Ord=2)
+    SuccessHODCA = HODCA(pathToToyAES, 2048, 40, 10, Ord=2)
     end = time.time()
     printResult(start, end, SuccessHODCA, False, "HODCA", "ISW_3 ToyAES")
 
@@ -145,7 +138,7 @@ def TestOnMINQToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on MINQ ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "MINQ ToyAES")
 
@@ -159,7 +152,7 @@ def TestOnMINQToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on MINQ ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,220,100,25)
+    SuccessFLDA = FLDA(pathToToyAES,240,100,25)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "MINQ ToyAES")
 
@@ -181,7 +174,7 @@ def TestOnDS_2ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on DS ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "DS ToyAES")
 
@@ -195,7 +188,7 @@ def TestOnDS_2ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on DS ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,100,40,10)
+    SuccessFLDA = FLDA(pathToToyAES,120,40,10)
     end = time.time()
     printResult(start, end, SuccessFLDA, False, "FLDA", "DS ToyAES")
 
@@ -210,7 +203,7 @@ def TestOnSEL_2_2ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on SEL_2_2 ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "SEL_2_2 ToyAES")
 
@@ -224,7 +217,7 @@ def TestOnSEL_2_2ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on SEL_2_2 ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,100,40,10)
+    SuccessFLDA = FLDA(pathToToyAES,360,160,40)
     end = time.time()
     printResult(start, end, SuccessFLDA, True, "FLDA", "SEL_2_2 ToyAES")
 
@@ -253,7 +246,7 @@ def TestOnS5_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on S5_3_3 ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "S5_3_3 ToyAES")
 
@@ -267,7 +260,7 @@ def TestOnS5_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("FLDA on S5_3_3 ToyAES:")
     start = time.time()
-    SuccessFLDA = FLDA(pathToToyAES,220,100,25)
+    SuccessFLDA = FLDA(pathToToyAES,240,100,25)
     end = time.time()
     printResult(start, end, SuccessFLDA, False, "FLDA", "S5_3_3 ToyAES")
 
@@ -296,14 +289,14 @@ def TestOnISWoDS_3_3ToyAES(pathToToyAES):
     logprint()
     logprint("ExactMatch on ISWoDS_3_3 ToyAES:")
     start = time.time()
-    SuccessExactMatch = ExactMatching(pathToToyAES,20)
+    SuccessExactMatch = ExactMatching(pathToToyAES,40)
     end = time.time()
     printResult(start, end, SuccessExactMatch, False, "Exact Match", "ISWoDS_3_3 ToyAES")
 
     logprint()
     logprint("LDA on ISWoDS_3_3 ToyAES:")
     start = time.time()
-    SuccessLDA = LDA(pathToToyAES,120,100,25)
+    SuccessLDA = LDA(pathToToyAES,140,100,25)
     end = time.time()
     printResult(start, end, SuccessLDA, False, "LDA", "ISWoDS_3_3 ToyAES")
 
