@@ -5,7 +5,7 @@ from wboxkit.prng import NFSR, Pool
 from wboxkit.ciphers.aes import BitAES
 from wboxkit.serialize import RawSerializer
 from S5 import S5
-from ToyAES import ToyAES
+from S5securityAssessment.ToyAES import ToyAES
 import os
 import argparse
 

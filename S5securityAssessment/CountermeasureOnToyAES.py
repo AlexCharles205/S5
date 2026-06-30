@@ -33,7 +33,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
     #Creating a toy AES composed of one AES Sbox, add a key Byte, and one AES Sbox
     C = BooleanCircuit(name="ToyAES")
     pt = C.add_inputs(8)
-    pt_supp = C.add_inputs(8)
+    pt_supp = C.add_inputs(16)
     #We add more inputs for two reasons:
     #   o Having only 8 input bits leads to only 256 different inputs, and since
     #     a white-box implementation is stateless and deterministic, this results
@@ -60,7 +60,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_S5_unencoded.in_place_remove_unused_nodes()
         #Verifying that the protected implementation returns the same output
         for i in range(10):
-            plaintext = os.urandom(2)
+            plaintext = os.urandom(3)
             ct1 = C.evaluate(Bin(plaintext).tuple)
             ct2 = C_S5_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
@@ -93,7 +93,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_ISW_unencoded.in_place_remove_unused_nodes()
         #Verifying that the protected implementation returns the same output
         for i in range(10):
-            plaintext = os.urandom(2)
+            plaintext = os.urandom(3)
             ct1 = C.evaluate(Bin(plaintext).tuple)
             ct2 = C_ISW_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
@@ -121,7 +121,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_DS_unencoded.in_place_remove_unused_nodes()
         #Verifying that the protected implementation returns the same output
         for i in range(10):
-            plaintext = os.urandom(2)
+            plaintext = os.urandom(3)
             ct1 = C.evaluate(Bin(plaintext).tuple)
             ct2 = C_DS_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
@@ -149,7 +149,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_MINQ_unencoded.in_place_remove_unused_nodes()
         #Verifying that the protected implementation returns the same output
         for i in range(10):
-            plaintext = os.urandom(2)
+            plaintext = os.urandom(3)
             ct1 = C.evaluate(Bin(plaintext).tuple)
             ct2 = C_MINQ_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
@@ -177,7 +177,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
         C_SEL_unencoded.in_place_remove_unused_nodes()
         #Verifying that the protected implementation returns the same output
         for i in range(10):
-            plaintext = os.urandom(2)
+            plaintext = os.urandom(3)
             ct1 = C.evaluate(Bin(plaintext).tuple)
             ct2 = C_SEL_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
@@ -212,7 +212,7 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
 
         #Verifying that the protected implementation returns the same output
         for i in range(10):
-            plaintext = os.urandom(2)
+            plaintext = os.urandom(3)
             ct1 = C.evaluate(Bin(plaintext).tuple)
             ct2 = C_ISWoDS_unencoded.evaluate(Bin(plaintext).tuple)
             assert ct1==ct2
