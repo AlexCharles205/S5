@@ -3,8 +3,13 @@ import pathlib
 import os
 import sys
 import io
+from functools import reduce
 from itertools import combinations, product
 from math import factorial as fac
+from tqdm import tqdm
+
+F2 = GF(2)
+F2tab = F2(0), F2(1)
 
 load("./attacks/SelectionAndNodeVectors.sage")
 load("./attacks/SlidingWindow.sage")
@@ -17,13 +22,26 @@ def RequiredAmountOfTracesHDDA(W, Ord):
     return(W+neededTraces)
 
 def ANDlists(L1,L2):
-    return([L1[i]&L2[i] for i in range(len(L1))])
+    return([a*b for a, b in zip(L1, L2)])
 
 def ExtANDTheWindow(W, Ord):
-    ExtW = W.copy()
+    ExtW = []
+
+    # linear vecors
+    for vec in W:
+        ExtW.append([F2tab[v] for v in vec])
+
+    # product vectors
+    products = []
     for combSize in range(2,Ord+1):
-        for comb in Combinations(W, combSize):
-            ExtW.append(ANDlists(comb[0],comb[1]))
+        for comb in combinations(ExtW, combSize):
+            andvec = reduce(ANDlists, comb)
+            products.append(andvec)
+
+    ExtW = products + ExtW
+
+    # constant vector
+    ExtW.append([F2tab[1]] * len(W[0]))
     return(ExtW)
 
 def HDDA(path, T, W, S, Ord=2):
@@ -37,7 +55,7 @@ def HDDA(path, T, W, S, Ord=2):
     SelectionVECTOR = vector(GF(2), SelectionVector)
 
     nmax = (len(NodeVectors)-W)//S
-    for n in range(nmax):
+    for n in tqdm(range(nmax)):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         for o in range(2,Ord+1):
             ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,o))
