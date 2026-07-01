@@ -300,5 +300,8 @@ if __name__ == '__main__' and '__file__' in globals():
         print()
         countermeasureOnToyAES("ISWoDS", l=3, s=3, printStats=True)
         print()
+        print()
+        countermeasureOnToyAES("ISWoDS", l=2, s=2, printStats=True)
+        print()
     else:
         countermeasureOnToyAES(args.countermeasure, args.linear_shares, args.slots, printStats=args.print_stats)
