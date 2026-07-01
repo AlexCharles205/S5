@@ -3,6 +3,7 @@ import pathlib
 import os
 import sys
 import io
+from tqdm import tqdm
 
 load("./attacks/SelectionAndNodeVectors.sage")
 load("./attacks/SlidingWindow.sage")
@@ -15,6 +16,15 @@ def AbsCorr(v1,v2,T):
         return((matches - (T/2))/(T/2))
     else :
         return((T - matches - (T/2))/(T/2))
+
+def sigma_test(vec1, vec2, T, k):
+    """Test if bias is larger than k*stddev."""
+    matches = 0
+    for i in range(T):
+        matches += int(vec1[i] == vec2[i])
+    deviation = abs(matches - T/2)
+    sigma = T**0.5 / 2.0
+    return deviation > k*sigma
 
 def maxCorIdx(L):
     maxCor = 0
@@ -41,12 +51,15 @@ def ExtXORTheWindow(W, Ord):
             ExtW.append(XORlists(comb[0],comb[1]))
     return(ExtW)
 
-def HODCA(path, T, W, S, Ord=2):
+def HODCA(path, T, W, S, skip_init=500, Ord=2):
     assert Ord >= 2, "The order O should be greater than one. For order equal to one, run DCA instead"
     (NodeVectors, SelectionVector, AllSelVectors) = SelectionAndNodeVectors(path, T, fullSelvectors = 1)
+
+    NodeVectors = NodeVectors[skip_init:]  # skip initialization to avoid correlation with plaintext
     BestAbsCorOfSv = [0 for _ in range(256)]
+
     nmax = (len(NodeVectors)-W)//S
-    for n in range(nmax):
+    for n in tqdm(range(nmax)):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         for o in range(2,Ord+1):
             ExtWin = ExtXORTheWindow(Win,Ord)
@@ -58,6 +71,34 @@ def HODCA(path, T, W, S, Ord=2):
 
     if AllSelVectors[maxCorIdx(BestAbsCorOfSv)] == SelectionVector:
         return(True)
+
+    return(False)
+
+def HODCAsigma(path, T, W, S, skip_init=500, Ord=2):
+    assert Ord >= 2, "The order O should be greater than one. For order equal to one, run DCA instead"
+    (NodeVectors, SelectionVector, AllSelVectors) = SelectionAndNodeVectors(path, T, fullSelvectors = 1)
+
+    NodeVectors = NodeVectors[skip_init:]  # skip initialization to avoid correlation with plaintext
+    nmax = (len(NodeVectors)-W)//S
+
+    itr = 0
+    for n in tqdm(range(nmax)):
+        Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
+        for o in range(2,Ord+1):
+            ExtWin = ExtXORTheWindow(Win,Ord)
+            for Nv in ExtWin:
+                Sv = SelectionVector
+                itr += 1
+                if T <= 256 or sigma_test(Nv, Sv, T=256, k=2.6125):  # deviation>21 1% chance
+                    k = 5.75 # for T=2048 deviation>130 1e-8 chance
+                    if sigma_test(Nv, Sv, T=T, k=k):
+                        matches = 0
+                        for i in range(T):
+                            matches += int(Nv[i] == Sv[i])
+                        deviation = abs(matches - T/2)
+                        sigma = T**0.5 / 2.0
+                        print("itr", itr, "dev", deviation, "sigma", sigma, "ksigma", k*sigma, "T", T)
+                        return(True)
 
     return(False)
 
