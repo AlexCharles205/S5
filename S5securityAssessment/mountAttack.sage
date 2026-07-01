@@ -66,7 +66,7 @@ def performAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,path
         return(DCA(pathToToyAES,totalT))
 
     elif AttackName == "HDDA":
-        return(HDDA(pathToToyAES, totalT, W, S, Ord=degree))
+        return(HDDA(pathToToyAES, totalT, W, S, skip_init, Ord=degree))
 
     elif AttackName == "HODCA":
         return(HODCAsigma(pathToToyAES, totalT, W, S, skip_init, Ord=degree))

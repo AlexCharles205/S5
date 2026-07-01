@@ -44,7 +44,7 @@ def ExtANDTheWindow(W, Ord):
     ExtW.append([F2tab[1]] * len(W[0]))
     return(ExtW)
 
-def HDDA(path, T, W, S, Ord=2):
+def HDDA(path, T, W, S, skip_init=0, Ord=2):
     #assert Ord >= 2, "The order O should be greater than one. For order equal to one, run LDA instead"
 
     RequiredTraces = RequiredAmountOfTracesHDDA(W, Ord)
@@ -52,6 +52,7 @@ def HDDA(path, T, W, S, Ord=2):
     assert T>=RequiredTraces, "The number of traces T should be greater or equal than %d" % RequiredTraces
     T = RequiredTraces
     (NodeVectors, SelectionVector) = SelectionAndNodeVectors(path, T)
+    NodeVectors = NodeVectors[skip_init:]
     SelectionVECTOR = vector(GF(2), SelectionVector)
 
     nmax = (len(NodeVectors)-W)//S
