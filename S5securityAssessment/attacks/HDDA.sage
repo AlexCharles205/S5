@@ -59,7 +59,13 @@ def HDDA(path, T, W, S, skip_init=0, Ord=2):
     for n in tqdm(range(nmax)):
         Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         for o in range(2,Ord+1):
-            ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,o))
+            # ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,o))
+            # Micro optimized version:
+            ExtWin_raw = ExtANDTheWindow(Win,o)
+            ExtWin = Matrix(GF(2), len(ExtWin_raw), len(ExtWin_raw[0]))
+            for i, vec in enumerate(ExtWin_raw):
+                ExtWin[i] = vec
+
             try :
                 ExtWin.solve_left(SelectionVECTOR)
                 # print("Extended window is %d lines and %d lines" % (ExtWin.nrows(), ExtWin.ncols()))
