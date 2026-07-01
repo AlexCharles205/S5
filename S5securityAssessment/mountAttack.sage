@@ -47,7 +47,7 @@ def printResult(timeStart, timeEnd, Success, AttackName, ImplementationName):
         print("%s failed to break %s in %.5f seconds." % (AttackName, ImplementationName, (timeEnd-timeStart)))
 
 
-def performAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES):
+def performAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,pathToToyAES):
 
     if AttackName == "ExactMatch":
         return(ExactMatching(pathToToyAES,totalT))
@@ -69,22 +69,22 @@ def performAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES):
         return(HDDA(pathToToyAES, totalT, W, S, Ord=degree))
 
     elif AttackName == "HODCA":
-        return(HODCA(pathToToyAES, totalT, W, S, Ord=degree))
+        return(HODCAsigma(pathToToyAES, totalT, W, S, skip_init, Ord=degree))
 
     else :
         print("\"%s\" is not a valid attack name. Please chose between \"ExactMatch\", \"LDA\", \"HDDA\", \"DCA\", \"HODCA\", \"FLDA\"" % AttackName)
         return(0)
 
-def mountAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES):
+def mountAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,pathToToyAES):
     start = time.time()
-    Success = performAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES)
+    Success = performAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,pathToToyAES)
     end = time.time()
     printResult(start, end, Success, AttackName, ImplementationName)
     return(1)
 
-def logTestAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES,ExpectedSuccess):
+def logTestAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,pathToToyAES,ExpectedSuccess):
     start = time.time()
-    Success = performAttack(degree,W,S,totalT,AttackName,ImplementationName,pathToToyAES)
+    Success = performAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,pathToToyAES)
     end = time.time()
     printLogResult(start, end, Success, ExpectedSuccess, AttackName, ImplementationName)
     return(1)
@@ -114,6 +114,11 @@ if __name__ == '__main__' and '__file__' in globals():
     parser.add_argument(
         '-S', '--step-size', type=int, default=5,
         help="Step size"
+    )
+
+    parser.add_argument(
+        '-I', '--skip-init', type=int, default=0,
+        help="Skip initialization #bits in the trace (PRNG, etc.). For (HO)DCA mainly."
     )
 
     parser.add_argument(
@@ -152,6 +157,6 @@ if __name__ == '__main__' and '__file__' in globals():
 
         log = log_path.open("a")
 
-        logTestAttack(args.degree,args.window_size,args.step_size,args.trace_amount,args.attack,args.trace_dir.name,args.trace_dir,args.ExpectedSuccess)
+        logTestAttack(args.degree,args.window_size,args.step_size,args.skip_init,args.trace_amount,args.attack,args.trace_dir.name,args.trace_dir,args.ExpectedSuccess)
     else :
         mountAttack(args.degree,args.window_size,args.step_size,args.trace_amount,args.attack,args.trace_dir.name,args.trace_dir)
