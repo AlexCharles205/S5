@@ -24,11 +24,11 @@ def countermeasureOnToyAES(countermeasure="S5",l=0,s=0,printStats=1):
 
     #The Pseudo-Random Number Generator used to create fresh randomness in the circuit
     nfsr = NFSR(
-        taps=[[], [1], [3], [5, 6], [15,12], [25], [7,27]],
-        clocks_initial=200,
+        taps=[[], [1], [17], [5, 23]],
+        clocks_initial=256,
         clocks_per_step=1,
     )
-    prng = Pool(prng=nfsr, n=500)
+    prng = Pool(prng=nfsr, n=200)
 
     #Creating a toy AES composed of one AES Sbox, add a key Byte, and one AES Sbox
     EXTRA_BYTES = 4
