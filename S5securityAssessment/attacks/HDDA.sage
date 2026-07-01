@@ -25,23 +25,19 @@ def ANDlists(L1,L2):
     return([a*b for a, b in zip(L1, L2)])
 
 def ExtANDTheWindow(W, Ord):
-    ExtW = []
-
     # linear vecors
-    for vec in W:
-        ExtW.append([F2tab[v] for v in vec])
+    ExtW = W.copy()
+
+    # constant vector
+    ExtW.append([F2tab[1]] * len(W[0]))
 
     # product vectors
     products = []
     for combSize in range(2,Ord+1):
-        for comb in combinations(ExtW, combSize):
+        for comb in combinations(W, combSize):
             andvec = reduce(ANDlists, comb)
-            products.append(andvec)
+            ExtW.append(andvec)
 
-    ExtW = products + ExtW
-
-    # constant vector
-    ExtW.append([F2tab[1]] * len(W[0]))
     return(ExtW)
 
 def HDDA(path, T, W, S, skip_init=0, Ord=2):
@@ -53,6 +49,8 @@ def HDDA(path, T, W, S, skip_init=0, Ord=2):
     T = RequiredTraces
     (NodeVectors, SelectionVector) = SelectionAndNodeVectors(path, T)
     NodeVectors = NodeVectors[skip_init:]
+    NodeVectors = [[F2tab[a] for a in vec] for vec in NodeVectors]
+
     SelectionVECTOR = vector(GF(2), SelectionVector)
 
     nmax = (len(NodeVectors)-W)//S
