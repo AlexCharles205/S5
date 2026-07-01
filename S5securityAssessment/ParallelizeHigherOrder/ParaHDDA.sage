@@ -112,7 +112,7 @@ def paraHDDA(path, T, W, S, Ord=2, begining=0, ending=0):
         ending = (len(NodeVectors))
     N = len(NodeVectors)
     nmax = (N - W) // S + 1
-    for n in range(nmax):
+    for n in tqdm(range(nmax)):
         #Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         Win = NodeVectors[n*S:n*S+W]
         for o in range(2,Ord+1):
