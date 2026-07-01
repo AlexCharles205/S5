@@ -90,7 +90,8 @@ def HODCAsigma(path, T, W, S, skip_init=500, Ord=2):
                 Sv = SelectionVector
                 itr += 1
                 if T <= 256 or sigma_test(Nv, Sv, T=256, k=2.6125):  # deviation>21 1% chance
-                    k = 5.75 # for T=2048 deviation>130 1e-8 chance
+                    #k = 5.75 # for T=2048 deviation>130 1e-8 chance
+                    k = 6.5 # for T=2048 deviation>146 1e-10 chance
                     if sigma_test(Nv, Sv, T=T, k=k):
                         matches = 0
                         for i in range(T):
