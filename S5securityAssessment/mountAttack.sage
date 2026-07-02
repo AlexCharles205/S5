@@ -72,7 +72,7 @@ def performAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,path
         return(HODCAsigma(pathToToyAES, totalT, W, S, skip_init, Ord=degree))
 
     else :
-        print("\"%s\" is not a valid attack name. Please chose between \"ExactMatch\", \"LDA\", \"HDDA\", \"DCA\", \"HODCA\", \"FLDA\"" % AttackName)
+        print("\"%s\" is not a valid attack name. Please chose between \"ExactMatch\", \"LDA\", \"HDDA\", \"DCA\", \"HODCAsigma\", \"FLDA\"" % AttackName)
         return(0)
 
 def mountAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,pathToToyAES):
@@ -160,4 +160,4 @@ if 1:# __name__ == '__main__' and '__file__' in globals():
 
         logTestAttack(args.degree,args.window_size,args.step_size,args.skip_init,args.trace_amount,args.attack,args.trace_dir.name,args.trace_dir,args.ExpectedSuccess)
     else :
-        mountAttack(args.degree,args.window_size,args.step_size,args.trace_amount,args.attack,args.trace_dir.name,args.trace_dir)
+        mountAttack(args.degree,args.window_size,args.step_size,args.skip_init,args.trace_amount,args.attack,args.trace_dir.name,args.trace_dir)
