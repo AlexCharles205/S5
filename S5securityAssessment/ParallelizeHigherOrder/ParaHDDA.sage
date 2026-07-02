@@ -88,7 +88,7 @@ def ExtANDTheWindow(W, Ord):
     ExtW.append([F2tab[1]] * width)
     return(ExtW)
 
-def paraHDDA(path, T, W, S, Ord=2, begining=0, ending=0):
+def paraHDDA(path, T, W, S, Ord=2, begining=0, ending=0, Record=0):
     #assert Ord >= 2, "The order O should be greater than one. For order equal to one, run LDA instead"
 
     RequiredTraces = RequiredAmountOfTracesHDDA(W, Ord)
@@ -112,6 +112,10 @@ def paraHDDA(path, T, W, S, Ord=2, begining=0, ending=0):
         ending = (len(NodeVectors))
     N = len(NodeVectors)
     nmax = (N - W) // S + 1
+
+    if Record:
+        HDDAresult = open("resultParaHDDA.txt", "a")
+
     for n in tqdm(range(nmax)):
         #Win = SlidingWindow(NodeVectors, W, S, n, Type='List')
         Win = NodeVectors[n*S:n*S+W]
@@ -130,6 +134,9 @@ def paraHDDA(path, T, W, S, Ord=2, begining=0, ending=0):
                 # print("the solution of the solve_left is %d long" % len(ExtWin.solve_left(SelectionVECTOR)))
                 # print("rank of ext win rank is %d" % ExtWin.rank())
                 # print("window %d out of %d" % (n, nmax))
+                if Record:
+                    print("1", end="", file=HDDAresult)
+                    HDDAresult.flush()
                 return(True)
             except :
                 pass
@@ -139,9 +146,15 @@ def paraHDDA(path, T, W, S, Ord=2, begining=0, ending=0):
         ExtWin = Matrix(GF(2), ExtANDTheWindow(Win,o))
         try :
             ExtWin.solve_left(SelectionVECTOR)
+            if Record:
+                print("1", end="", file=HDDAresult)
+                HDDAresult.flush()
             return(True)
         except :
             pass
+    if Record:
+        print("0", end="", file=HDDAresult)
+        HDDAresult.flush()
     return(False)
 
 if __name__ == '__main__' and '__file__' in globals():
@@ -185,9 +198,14 @@ if __name__ == '__main__' and '__file__' in globals():
         help="Node to end HDDA at, if set as 0, then goes until the very last node"
     )
 
+    parser.add_argument(
+        '-r', '--record', type=int, default=0,
+        help="Record the result in a file to parallelize"
+    )
+
     args = parser.parse_args()
 
-    if(paraHDDA(args.trace_dir, args.trace_amount, args.window_size, args.step_size, args.order, args.begining, args.ending)):
+    if(paraHDDA(args.trace_dir, args.trace_amount, args.window_size, args.step_size, args.order, args.begining, args.ending, args.record)):
         print("[SUCCESS] Higher Degree Decoding Analysis attack successfully retrived the key byte")
     else:
         print("[FAILLURE] Higher Degree Decoding Analysis did not retrieve the key byte")
