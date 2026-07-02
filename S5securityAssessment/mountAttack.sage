@@ -90,7 +90,8 @@ def logTestAttack(degree,W,S,skip_init,totalT,AttackName,ImplementationName,path
     return(1)
 
 
-if __name__ == '__main__' and '__file__' in globals():
+if 1:# __name__ == '__main__' and '__file__' in globals():
+    if "--" in sys.argv: sys.argv.remove("--")
     parser = argparse.ArgumentParser(
         description='description to do later',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
