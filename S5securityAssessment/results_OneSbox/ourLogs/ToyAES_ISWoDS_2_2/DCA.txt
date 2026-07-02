@@ -1,0 +1,1 @@
+As expected, DCA failed to break ToyAES_ISWoDS_2_2 in 515.38282 seconds.

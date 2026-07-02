@@ -1,0 +1,1 @@
+As expected, ExactMatch failed to break ToyAES_S5_3_3 in 0.35468 seconds.

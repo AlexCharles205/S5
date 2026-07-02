@@ -1,0 +1,3 @@
+As expected, HODCA managed to break ToyAES_SEL_2_2 in 190.13747 seconds.
+As expected, HODCA managed to break ToyAES_SEL_2_2 in 384.74339 seconds.
+As expected, HODCA managed to break ToyAES_SEL_2_2 in 743.07612 seconds.

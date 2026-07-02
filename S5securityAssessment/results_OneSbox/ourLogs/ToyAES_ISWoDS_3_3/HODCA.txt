@@ -1,0 +1,1 @@
+As expected, HODCA failed to break ToyAES_ISWoDS_3_3 in 795.69228 seconds.

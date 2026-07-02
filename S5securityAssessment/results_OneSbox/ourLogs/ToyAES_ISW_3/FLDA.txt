@@ -1,0 +1,8 @@
+As expected, FLDA managed to break ToyAES_ISW_3 in 21.78148 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 21.37517 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 60.25723 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 28.80710 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 12.75261 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 9.77368 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 9.84578 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 9.87314 seconds.

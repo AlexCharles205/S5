@@ -1,0 +1,5 @@
+As expected, HDDA managed to break ToyAES_MINQ in 95.31358 seconds.
+As expected, HDDA managed to break ToyAES_MINQ in 252.25763 seconds.
+As expected, HDDA managed to break ToyAES_MINQ in 817.00652 seconds.
+As expected, HDDA managed to break ToyAES_MINQ in 205.94415 seconds.
+As expected, HDDA managed to break ToyAES_MINQ in 803.02746 seconds.

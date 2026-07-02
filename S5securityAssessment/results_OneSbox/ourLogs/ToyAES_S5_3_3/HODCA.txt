@@ -1,0 +1,1 @@
+As expected, HODCA failed to break ToyAES_S5_3_3 in 233.25785 seconds.

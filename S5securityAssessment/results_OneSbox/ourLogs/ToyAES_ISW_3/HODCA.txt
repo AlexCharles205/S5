@@ -1,0 +1,15 @@
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 31.99946 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 29.30685 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 28.51097 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 30.96553 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 29.63958 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 27.05614 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 45.85584 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 24.84918 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 25.23111 seconds.
+/!\ FAILED /!\: HODCA managed to break ToyAES_ISW_3 in 24.93764 seconds.
+As expected, HODCA failed to break ToyAES_ISW_3 in 450.30122 seconds.
+As expected, HODCA managed to break ToyAES_MINQ in 381.68846 seconds.
+As expected, HODCA failed to break ToyAES_ISWoDS_2_2 in 1142.59171 seconds.
+As expected, HODCA failed to break ToyAES_ISW_3 in 167.43835 seconds.
+As expected, HODCA failed to break ToyAES_ISW_3 in 174.01263 seconds.

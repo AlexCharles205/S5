@@ -1,0 +1,12 @@
+As expected, ExactMatch managed to break ToyAES in 0.01190 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01194 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01172 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01204 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01221 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01232 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01197 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01251 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01279 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01222 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01198 seconds.
+As expected, ExactMatch managed to break ToyAES in 0.01221 seconds.

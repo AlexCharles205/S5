@@ -1,0 +1,10 @@
+As expected, LDA managed to break ToyAES in 0.07118 seconds.
+As expected, LDA managed to break ToyAES in 0.07078 seconds.
+As expected, LDA managed to break ToyAES in 0.07072 seconds.
+As expected, LDA managed to break ToyAES in 0.07065 seconds.
+As expected, LDA managed to break ToyAES in 0.06757 seconds.
+As expected, LDA managed to break ToyAES in 0.07132 seconds.
+As expected, LDA managed to break ToyAES in 0.06961 seconds.
+As expected, LDA managed to break ToyAES in 0.06934 seconds.
+As expected, LDA managed to break ToyAES in 0.06863 seconds.
+As expected, LDA managed to break ToyAES in 0.06929 seconds.

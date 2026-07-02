@@ -1,0 +1,1 @@
+As expected, FLDA managed to break ToyAES_SEL_2_2 in 335.88022 seconds.

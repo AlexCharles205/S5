@@ -1,0 +1,5 @@
+As expected, DCA managed to break ToyAES_MINQ in 182.33729 seconds.
+As expected, DCA managed to break ToyAES_MINQ in 115.94342 seconds.
+As expected, DCA managed to break ToyAES_MINQ in 83.03211 seconds.
+As expected, DCA managed to break ToyAES_MINQ in 82.53668 seconds.
+As expected, DCA managed to break ToyAES_MINQ in 82.58462 seconds.

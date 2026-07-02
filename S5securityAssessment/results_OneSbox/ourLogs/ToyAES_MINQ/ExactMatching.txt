@@ -1,0 +1,5 @@
+As expected, ExactMatch failed to break ToyAES_MINQ in 0.84058 seconds.
+As expected, ExactMatch failed to break ToyAES_MINQ in 0.55304 seconds.
+As expected, ExactMatch failed to break ToyAES_MINQ in 0.42064 seconds.
+As expected, ExactMatch failed to break ToyAES_MINQ in 0.40214 seconds.
+As expected, ExactMatch failed to break ToyAES_MINQ in 0.41830 seconds.

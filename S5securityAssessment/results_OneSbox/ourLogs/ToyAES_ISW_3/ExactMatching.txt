@@ -1,0 +1,9 @@
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.30182 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.29422 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.74804 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.36442 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.20031 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.19840 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.13615 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.13516 seconds.
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.14968 seconds.

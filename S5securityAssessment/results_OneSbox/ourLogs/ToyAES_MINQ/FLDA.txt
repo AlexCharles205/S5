@@ -1,0 +1,5 @@
+As expected, FLDA managed to break ToyAES_MINQ in 363.33975 seconds.
+As expected, FLDA managed to break ToyAES_MINQ in 203.62678 seconds.
+As expected, FLDA managed to break ToyAES_MINQ in 116.75674 seconds.
+As expected, FLDA managed to break ToyAES_MINQ in 113.02246 seconds.
+As expected, FLDA managed to break ToyAES_MINQ in 114.65658 seconds.

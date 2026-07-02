@@ -1,0 +1,1 @@
+As expected, FLDA failed to break ToyAES_S5_3_3 in 171.10558 seconds.

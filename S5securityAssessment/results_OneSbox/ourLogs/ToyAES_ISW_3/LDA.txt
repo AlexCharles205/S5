@@ -1,0 +1,8 @@
+As expected, LDA managed to break ToyAES_ISW_3 in 1.04828 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 1.03340 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 2.46757 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 1.28082 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 0.70168 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 0.49356 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 0.49287 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 0.49601 seconds.

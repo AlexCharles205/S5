@@ -1,0 +1,1 @@
+As expected, DCA failed to break ToyAES_S5_3_3 in 458.06959 seconds.

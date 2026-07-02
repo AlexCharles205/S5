@@ -1,0 +1,78 @@
+Wed Jul  1 14:39:39 CEST 2026
+Performing tests on Clear ToyAES\n
+As expected, ExactMatch managed to break ToyAES in 0.01221 seconds.
+As expected, LDA managed to break ToyAES in 0.06929 seconds.
+As expected, FLDA managed to break ToyAES in 0.22419 seconds.
+As expected, DCA managed to break ToyAES in 0.64227 seconds.
+
+Wed Jul  1 14:39:47 CEST 2026
+Performing tests on ISW_2 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_ISW_2 in 0.12039 seconds.
+As expected, LDA managed to break ToyAES_ISW_2 in 0.39181 seconds.
+As expected, FLDA managed to break ToyAES_ISW_2 in 7.43825 seconds.
+As expected, DCA failed to break ToyAES_ISW_2 in 5.49243 seconds.
+
+Wed Jul  1 14:40:08 CEST 2026
+Performing tests on ISW_3 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_ISW_3 in 0.14968 seconds.
+As expected, LDA managed to break ToyAES_ISW_3 in 0.49601 seconds.
+As expected, FLDA managed to break ToyAES_ISW_3 in 9.87314 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 7.86811 seconds.
+As expected, HODCA failed to break ToyAES_ISW_3 in 174.01263 seconds.
+
+Wed Jul  1 14:43:29 CEST 2026
+Performing tests on MINQ ToyAES\n
+As expected, ExactMatch failed to break ToyAES_MINQ in 0.41830 seconds.
+As expected, LDA failed to break ToyAES_MINQ in 2.42744 seconds.
+As expected, FLDA managed to break ToyAES_MINQ in 114.65658 seconds.
+As expected, DCA managed to break ToyAES_MINQ in 82.58462 seconds.
+As expected, HDDA managed to break ToyAES_MINQ in 803.02746 seconds.
+
+Wed Jul  1 15:00:21 CEST 2026
+Performing tests on DS_2 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_DS_2 in 0.09446 seconds.
+As expected, LDA failed to break ToyAES_DS_2 in 0.39607 seconds.
+As expected, FLDA failed to break ToyAES_DS_2 in 45.45300 seconds.
+/!\ FAILED /!\: DCA failed to break ToyAES_DS_2 in 10.97539 seconds.
+  DCA solved <<< added later (was not enough traces)
+  As expected, DCA managed to break ToyAES_DS_2 in 18.49238 seconds.  (200 traces)
+
+Wed Jul  1 15:01:24 CEST 2026
+Performing tests on SEL_2_2 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_SEL_2_2 in 0.59965 seconds.
+As expected, LDA failed to break ToyAES_SEL_2_2 in 3.65229 seconds.
+As expected, FLDA managed to break ToyAES_SEL_2_2 in 335.88022 seconds.
+As expected, DCA failed to break ToyAES_SEL_2_2 in 684.88731 seconds.
+As expected, HDDA managed to break ToyAES_SEL_2_2 in 1003.15060 seconds.
+As expected, HODCA managed to break ToyAES_SEL_2_2 in 190.13747 seconds.
+As expected, HODCA managed to break ToyAES_SEL_2_2 in 384.74339 seconds.
+As expected, HODCA managed to break ToyAES_SEL_2_2 in 743.07612 seconds.
+
+Wed Jul  1 15:57:25 CEST 2026
+Performing tests on ISWoDS_2_2 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_ISWoDS_2_2 in 0.39566 seconds.
+As expected, LDA failed to break ToyAES_ISWoDS_2_2 in 2.86129 seconds.
+As expected, FLDA failed to break ToyAES_ISWoDS_2_2 in 179.13833 seconds.
+As expected, DCA failed to break ToyAES_ISWoDS_2_2 in 515.38282 seconds.
+  HDDA <<< added later (was not enough traces)
+  As expected, HDDA failed to break ToyAES_ISWoDS_2_2 in 1329.65195 seconds.
+As expected, HODCA managed to break ToyAES_ISWoDS_2_2 in 222.75041 seconds.
+
+Wed Jul  1 16:12:54 CEST 2026
+Performing tests on S5_3_3 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_S5_3_3 in 0.35468 seconds.
+As expected, LDA failed to break ToyAES_S5_3_3 in 2.59897 seconds.
+As expected, FLDA failed to break ToyAES_S5_3_3 in 171.10558 seconds.
+As expected, DCA failed to break ToyAES_S5_3_3 in 458.06959 seconds.
+As expected, HDDA failed to break ToyAES_S5_3_3 in 1171.83103 seconds.
+As expected, HODCA failed to break ToyAES_S5_3_3 in 233.25785 seconds.
+
+Wed Jul  1 16:47:02 CEST 2026
+Performing tests on ISWoDS_3_3 ToyAES\n
+As expected, ExactMatch failed to break ToyAES_ISWoDS_3_3 in 1.05283 seconds.
+As expected, LDA failed to break ToyAES_ISWoDS_3_3 in 7.61036 seconds.
+As expected, FLDA failed to break ToyAES_ISWoDS_3_3 in 496.19547 seconds.
+As expected, DCA failed to break ToyAES_ISWoDS_3_3 in 1520.33408 seconds.
+  HDDA <<< added later (was not enough traces)
+  As expected, HDDA failed to break ToyAES_ISWoDS_3_3 in 3543.90249 seconds.
+As expected, HODCA failed to break ToyAES_ISWoDS_3_3 in 795.69228 seconds.

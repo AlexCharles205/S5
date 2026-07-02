@@ -1,0 +1,1 @@
+As expected, LDA failed to break ToyAES_DS_2 in 0.39607 seconds.

@@ -1,0 +1,1 @@
+As expected, LDA failed to break ToyAES_ISWoDS_3_3 in 7.61036 seconds.

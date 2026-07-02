@@ -1,0 +1,9 @@
+As expected, FLDA managed to break ToyAES in 0.21897 seconds.
+As expected, FLDA managed to break ToyAES in 0.21856 seconds.
+As expected, FLDA managed to break ToyAES in 0.21575 seconds.
+As expected, FLDA managed to break ToyAES in 0.22084 seconds.
+As expected, FLDA managed to break ToyAES in 0.21913 seconds.
+As expected, FLDA managed to break ToyAES in 0.22053 seconds.
+As expected, FLDA managed to break ToyAES in 0.22099 seconds.
+As expected, FLDA managed to break ToyAES in 0.21867 seconds.
+As expected, FLDA managed to break ToyAES in 0.22419 seconds.

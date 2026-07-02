@@ -1,0 +1,5 @@
+As expected, LDA failed to break ToyAES_MINQ in 5.69913 seconds.
+As expected, LDA failed to break ToyAES_MINQ in 3.57650 seconds.
+As expected, LDA failed to break ToyAES_MINQ in 2.56632 seconds.
+As expected, LDA failed to break ToyAES_MINQ in 2.44987 seconds.
+As expected, LDA failed to break ToyAES_MINQ in 2.42744 seconds.

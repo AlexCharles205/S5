@@ -1,0 +1,8 @@
+As expected, DCA failed to break ToyAES_ISW_3 in 15.89827 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 16.22640 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 37.49106 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 20.15245 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 11.09858 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 7.88613 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 7.84836 seconds.
+As expected, DCA failed to break ToyAES_ISW_3 in 7.86811 seconds.

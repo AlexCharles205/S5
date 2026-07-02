@@ -1,0 +1,9 @@
+As expected, DCA managed to break ToyAES in 0.62976 seconds.
+As expected, DCA managed to break ToyAES in 0.64001 seconds.
+As expected, DCA managed to break ToyAES in 0.63264 seconds.
+As expected, DCA managed to break ToyAES in 0.64847 seconds.
+As expected, DCA managed to break ToyAES in 0.65240 seconds.
+As expected, DCA managed to break ToyAES in 0.63723 seconds.
+As expected, DCA managed to break ToyAES in 0.63539 seconds.
+As expected, DCA managed to break ToyAES in 0.63312 seconds.
+As expected, DCA managed to break ToyAES in 0.64227 seconds.

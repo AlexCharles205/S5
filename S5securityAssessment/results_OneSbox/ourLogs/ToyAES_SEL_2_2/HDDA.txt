@@ -1,0 +1,1 @@
+As expected, HDDA managed to break ToyAES_SEL_2_2 in 1003.15060 seconds.

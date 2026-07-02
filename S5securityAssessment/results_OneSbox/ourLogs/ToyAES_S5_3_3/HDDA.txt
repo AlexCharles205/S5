@@ -1,0 +1,1 @@
+As expected, HDDA failed to break ToyAES_S5_3_3 in 1171.83103 seconds.

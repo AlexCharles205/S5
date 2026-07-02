@@ -1,0 +1,1 @@
+As expected, HDDA failed to break ToyAES_ISWoDS_2_2 in 1329.65195 seconds.
