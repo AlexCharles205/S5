@@ -1,0 +1,1 @@
+As expected, HODCA managed to break ToyAES_MINQ in 198.43835 seconds.
