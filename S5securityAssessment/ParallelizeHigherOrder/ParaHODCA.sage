@@ -185,7 +185,7 @@ def ParaHODCAsigma(path, T, W, S, Ord=2, begining=0, ending=0, Record=0):
                         deviation = abs(matches - T/2)
                         sigma = T**0.5 / 2.0
                         print("itr", itr, "dev", deviation, "sigma", sigma, "ksigma", k*sigma, "T", T)
-                        if record:
+                        if Record:
                             print("1", end="", file=HODCAresult)
                             HODCAresult.flush()
                         return(True)
@@ -241,9 +241,20 @@ if __name__ == '__main__' and '__file__' in globals():
         help="Record the result in a file to parallelize"
     )
 
+    parser.add_argument(
+        '-s', '--sigma', type=int, default=0,
+        help="to use the sigma version of HODCA instead"
+    )
+
     args = parser.parse_args()
 
-    if(ParaHODCA(args.trace_dir, args.trace_amount, args.window_size, args.step_size, args.order, args.begining, args.ending, args.record)):
-        print("[SUCCESS] Differential Computation Analysis attack successfully retrived the key byte")
-    else:
-        print("[FAILLURE] Differential Computation Analysis attack did not retrieve the key byte")
+    if args.sigma:
+        if(ParaHODCAsigma(args.trace_dir, args.trace_amount, args.window_size, args.step_size, args.order, args.begining, args.ending, args.record)):
+            print("[SUCCESS] Differential Computation Analysis attack successfully retrived the key byte")
+        else:
+            print("[FAILLURE] Differential Computation Analysis attack did not retrieve the key byte")
+    else :
+        if(ParaHODCA(args.trace_dir, args.trace_amount, args.window_size, args.step_size, args.order, args.begining, args.ending, args.record)):
+            print("[SUCCESS] Differential Computation Analysis attack successfully retrived the key byte")
+        else:
+            print("[FAILLURE] Differential Computation Analysis attack did not retrieve the key byte")
