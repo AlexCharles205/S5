@@ -1,0 +1,1 @@
+As expected, HODCA managed to break ToyAES in 0.73354 seconds.
