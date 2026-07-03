@@ -47,7 +47,7 @@ def createISWoDS(l,s,r):
 
 
     #Saving the output circuit to a file, which can be used with wboxkit to generate traces
-    RawSerializer().serialize_to_file(C_ISWoDS, "circuits/aes%d_ISWoDS_%d_%d.bin" % (r,l,s))
+    RawSerializer(bytes_addr=4).serialize_to_file(C_ISWoDS, "circuits/aes%d_ISWoDS_%d_%d.bin" % (r,l,s))
 
 
     #Printing circuit stats of the base AES and its protected version
